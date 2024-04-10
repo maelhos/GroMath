@@ -1,0 +1,105 @@
+
+
+fn test(int a, int b) -> int {
+    
+}
+
+fn test( fn(int, float) -> int, int a) -> int {
+    ret 65;
+}
+
+
+SymbolicVar X;
+SymbolicExpr E = 78*X^2 + 45 + 1; constexpr
+
+print(E)
+5 ** 6
+
+int pour les grd entier de ZZ
+
+i8
+u8
+
+i32
+u32
+
+i64
+u64
+
+
+vec<i32> test = [4, 5, 6, 7];
+set<i32> k = {4, 5, 6, 4};
+
+
+
+vec<i32> 
+.size()
+.push()
+
+.begin()
+.end()
+.next()
+
+[index]
+
+for (int i = 0; i < pute; i++){
+    printf("%d", caca[i]);
+}
+
+for (int i = 0; i < pute; i++){
+    printf("%d", *(caca + i));
+}
+
+for (int* i = caca; i < caca + pute; i++){
+    printf("%d", *(caca));
+}
+
+for (k in a)
+
+add
+sub
+mul
+div
+pow
+neg
+str
+
+if 
+else
+elif 
+
+test(caca, 69)
+
+heritance de foncteur (dans l'ordre ici...)
+
+foncteur qui requiert des traits comme en caml
+pour group : finite, cyclic
+
+foncteur de base:
+    Monoid
+    Group alias de AdditiveGroup
+    MultiplicativeGroup
+    CyclicGroup prend un element générateur et un Group
+    Ring (AbelianGroup*Monoid)
+    Field hérite de CommutativeRing
+
+Polynomial Ring <- SymbolicVar;
+
+special methods :
+    compare
+    
+
+module type Groupable =
+  sig
+    type t
+    val id: t
+    val inv: t -> t
+    val op: t -> t -> t
+  end
+
+module Make(Elt: Groupable)
+
+ZZ QQ RR
+
+
+

@@ -1,0 +1,58 @@
+
+
+translation_unit
+	: external_declaration
+	| translation_unit external_declaration
+	;
+
+external_declaration
+	: function_definition
+	| declaration
+	;
+
+function_definition
+	: declaration_specifiers declarator declaration_list compound_statement
+	| declaration_specifiers declarator compound_statement
+	;
+
+declarator
+	: IDENTIFIER
+	| '(' declarator ')'
+	| declarator '[' ']'
+	| declarator '(' parameter_list ')'
+	| declarator '(' ')'
+	;
+
+parameter_list
+	: parameter_declaration
+	| parameter_list ',' parameter_declaration
+	;
+
+
+type_specifier
+	: VOID
+	| CHAR
+	| INT
+	| LONG
+	| FLOAT
+	| BOOL
+	| math_obj_specifier
+	;
+
+arr_type_specifier
+    : type_specifier
+    | arr_type_specifier '[' ']'
+    ;
+
+math_obj_specifier
+    : IDENTIFIER
+    ;
+
+declaration_specifiers
+	: EXTERN
+	| EXTERN declaration_specifiers
+	| type_specifier
+	| type_specifier declaration_specifiers
+	| CONST
+	| CONST declaration_specifiers
+	;
