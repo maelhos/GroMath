@@ -67,6 +67,13 @@
         "forward_list": "cpp",
         "unordered_set": "cpp",
         "iomanip": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "csignal": "cpp",
+        "strstream": "cpp",
+        "bitset": "cpp",
+        "codecvt": "cpp",
+        "regex": "cpp",
+        "fstream": "cpp",
+        "cfenv": "cpp"
     }
 }
