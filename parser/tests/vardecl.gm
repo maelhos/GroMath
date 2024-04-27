@@ -1,0 +1,5 @@
+// Basic var declaration
+
+a: int = 48;
+
+b: int -> int = "oh non";

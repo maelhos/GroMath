@@ -39,7 +39,7 @@
 # define YY_YY_PARSER_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -56,7 +56,7 @@ extern int yydebug;
     YYUNDEF = 257,                 /* "invalid token"  */
     TIDENTIFIER = 258,             /* TIDENTIFIER  */
     TINTEGER = 259,                /* TINTEGER  */
-    TDOUBLE = 260,                 /* TDOUBLE  */
+    TCSTSTRING = 260,              /* TCSTSTRING  */
     TCEQ = 261,                    /* TCEQ  */
     TCNE = 262,                    /* TCNE  */
     TCLT = 263,                    /* TCLT  */
@@ -68,12 +68,31 @@ extern int yydebug;
     TRPAREN = 269,                 /* TRPAREN  */
     TLBRACE = 270,                 /* TLBRACE  */
     TRBRACE = 271,                 /* TRBRACE  */
-    TCOMMA = 272,                  /* TCOMMA  */
-    TDOT = 273,                    /* TDOT  */
-    TPLUS = 274,                   /* TPLUS  */
-    TMINUS = 275,                  /* TMINUS  */
-    TMUL = 276,                    /* TMUL  */
-    TDIV = 277                     /* TDIV  */
+    TLBRACK = 272,                 /* TLBRACK  */
+    TRBRACK = 273,                 /* TRBRACK  */
+    TLLBRACK = 274,                /* TLLBRACK  */
+    TRRBRACK = 275,                /* TRRBRACK  */
+    TCOMMA = 276,                  /* TCOMMA  */
+    TDOT = 277,                    /* TDOT  */
+    TCOLON = 278,                  /* TCOLON  */
+    TSCOLON = 279,                 /* TSCOLON  */
+    TPLUS = 280,                   /* TPLUS  */
+    TMINUS = 281,                  /* TMINUS  */
+    TMUL = 282,                    /* TMUL  */
+    TDIV = 283,                    /* TDIV  */
+    TMOD = 284,                    /* TMOD  */
+    TPOW = 285,                    /* TPOW  */
+    TIF = 286,                     /* TIF  */
+    TELSE = 287,                   /* TELSE  */
+    TFN = 288,                     /* TFN  */
+    TWHILE = 289,                  /* TWHILE  */
+    TFOR = 290,                    /* TFOR  */
+    TIN = 291,                     /* TIN  */
+    TRET = 292,                    /* TRET  */
+    TBREAK = 293,                  /* TBREAK  */
+    TCONTINUE = 294,               /* TCONTINUE  */
+    TRANGE = 295,                  /* TRANGE  */
+    TRARROW = 296                  /* TRARROW  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -82,20 +101,21 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 10 "parser.y"
+#line 10 "parser.yacc"
 
-    Node *node;
-    NBlock *block;
-    NExpression *expr;
-    NStatement *stmt;
-    NIdentifier *ident;
-    NVariableDeclaration *var_decl;
-    std::vector<NVariableDeclaration*> *varvec;
-    std::vector<NExpression*> *exprvec;
-    std::string *string;
+    Node* node;
+    NBlock* block;
+    NExpression* expr;
+    NStatement* stmt;
+    NIdentifier* ident;
+    NVariableDeclaration* var_decl;
+    NIterator* iter;
+    std::vector<NVariableDeclaration*>* varvec;
+    std::vector<NExpression*>* exprvec;
+    std::string* string;
     int token;
 
-#line 99 "parser.hpp"
+#line 119 "parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -1,0 +1,5 @@
+// Basic Function declaration + ret
+
+fn test() : int {
+    ret 0;
+}

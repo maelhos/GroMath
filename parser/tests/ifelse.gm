@@ -1,0 +1,14 @@
+// Basic if else
+
+if (5 == 4):
+    print(0);
+else:
+    print(1)
+
+if (5 == 4): {
+    print(0);
+    print("lalal");
+}
+else: {
+    print("wat");
+}
