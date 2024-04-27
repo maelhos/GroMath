@@ -1,0 +1,4 @@
+// Basic while
+
+while t == 8:
+    print("t = 8, a bon ?");

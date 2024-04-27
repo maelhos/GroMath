@@ -32,7 +32,7 @@ Grammar
    12     | continue_stmt TSCOLON
 
    13 if_stmt: TIF expr TCOLON block
-   14        | TIF expr TCOLON block TELSE block
+   14        | TIF expr TCOLON block TELSE TCOLON block
 
    15 iterator: TRANGE TLPAREN expr TRPAREN
    16         | TRANGE TLPAREN expr TCOMMA expr TRPAREN
@@ -282,7 +282,7 @@ State 4
 State 5
 
    13 if_stmt: TIF • expr TCOLON block
-   14        | TIF • expr TCOLON block TELSE block
+   14        | TIF • expr TCOLON block TELSE TCOLON block
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -549,7 +549,7 @@ State 28
 State 29
 
    13 if_stmt: TIF expr • TCOLON block
-   14        | TIF expr • TCOLON block TELSE block
+   14        | TIF expr • TCOLON block TELSE TCOLON block
    44 expr: expr • binop expr
 
     TCEQ    shift, and go to state 44
@@ -818,7 +818,7 @@ State 56
 State 57
 
    13 if_stmt: TIF expr TCOLON • block
-   14        | TIF expr TCOLON • block TELSE block
+   14        | TIF expr TCOLON • block TELSE TCOLON block
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -1060,7 +1060,7 @@ State 68
 State 69
 
    13 if_stmt: TIF expr TCOLON block •
-   14        | TIF expr TCOLON block • TELSE block
+   14        | TIF expr TCOLON block • TELSE TCOLON block
 
     TELSE  shift, and go to state 82
 
@@ -1210,35 +1210,9 @@ State 81
 
 State 82
 
-   14 if_stmt: TIF expr TCOLON block TELSE • block
+   14 if_stmt: TIF expr TCOLON block TELSE • TCOLON block
 
-    TIDENTIFIER  shift, and go to state 1
-    TINTEGER     shift, and go to state 2
-    TCSTSTRING   shift, and go to state 3
-    TLPAREN      shift, and go to state 4
-    TLBRACE      shift, and go to state 67
-    TIF          shift, and go to state 5
-    TFN          shift, and go to state 6
-    TWHILE       shift, and go to state 7
-    TFOR         shift, and go to state 8
-    TRET         shift, and go to state 9
-    TBREAK       shift, and go to state 10
-    TCONTINUE    shift, and go to state 11
-
-    stmt           go to state 68
-    if_stmt        go to state 15
-    for_stmt       go to state 16
-    while_stmt     go to state 17
-    break_stmt     go to state 18
-    continue_stmt  go to state 19
-    ret_stmt       go to state 20
-    block          go to state 92
-    var_decl       go to state 21
-    func_decl      go to state 22
-    ident          go to state 23
-    cst_string     go to state 24
-    cst_int        go to state 25
-    expr           go to state 26
+    TCOLON  shift, and go to state 92
 
 
 State 83
@@ -1386,9 +1360,35 @@ State 91
 
 State 92
 
-   14 if_stmt: TIF expr TCOLON block TELSE block •
+   14 if_stmt: TIF expr TCOLON block TELSE TCOLON • block
 
-    $default  reduce using rule 14 (if_stmt)
+    TIDENTIFIER  shift, and go to state 1
+    TINTEGER     shift, and go to state 2
+    TCSTSTRING   shift, and go to state 3
+    TLPAREN      shift, and go to state 4
+    TLBRACE      shift, and go to state 67
+    TIF          shift, and go to state 5
+    TFN          shift, and go to state 6
+    TWHILE       shift, and go to state 7
+    TFOR         shift, and go to state 8
+    TRET         shift, and go to state 9
+    TBREAK       shift, and go to state 10
+    TCONTINUE    shift, and go to state 11
+
+    stmt           go to state 68
+    if_stmt        go to state 15
+    for_stmt       go to state 16
+    while_stmt     go to state 17
+    break_stmt     go to state 18
+    continue_stmt  go to state 19
+    ret_stmt       go to state 20
+    block          go to state 98
+    var_decl       go to state 21
+    func_decl      go to state 22
+    ident          go to state 23
+    cst_string     go to state 24
+    cst_int        go to state 25
+    expr           go to state 26
 
 
 State 93
@@ -1397,7 +1397,7 @@ State 93
 
     TIDENTIFIER  shift, and go to state 1
 
-    ident  go to state 98
+    ident  go to state 99
 
 
 State 94
@@ -1419,7 +1419,7 @@ State 95
     ident       go to state 27
     cst_string  go to state 24
     cst_int     go to state 25
-    expr        go to state 99
+    expr        go to state 100
 
 
 State 96
@@ -1435,8 +1435,8 @@ State 96
     TCLE     shift, and go to state 47
     TCGT     shift, and go to state 48
     TCGE     shift, and go to state 49
-    TRPAREN  shift, and go to state 100
-    TCOMMA   shift, and go to state 101
+    TRPAREN  shift, and go to state 101
+    TCOMMA   shift, and go to state 102
     TPLUS    shift, and go to state 51
     TMINUS   shift, and go to state 52
     TMUL     shift, and go to state 53
@@ -1453,6 +1453,13 @@ State 97
 
 
 State 98
+
+   14 if_stmt: TIF expr TCOLON block TELSE TCOLON block •
+
+    $default  reduce using rule 14 (if_stmt)
+
+
+State 99
 
    32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN TCOLON ident • block
 
@@ -1476,7 +1483,7 @@ State 98
     break_stmt     go to state 18
     continue_stmt  go to state 19
     ret_stmt       go to state 20
-    block          go to state 102
+    block          go to state 103
     var_decl       go to state 21
     func_decl      go to state 22
     ident          go to state 23
@@ -1485,7 +1492,7 @@ State 98
     expr           go to state 26
 
 
-State 99
+State 100
 
    18 iterator: TLLBRACK expr TCOMMA expr • TRRBRACK
    44 expr: expr • binop expr
@@ -1496,7 +1503,7 @@ State 99
     TCLE      shift, and go to state 47
     TCGT      shift, and go to state 48
     TCGE      shift, and go to state 49
-    TRRBRACK  shift, and go to state 103
+    TRRBRACK  shift, and go to state 104
     TPLUS     shift, and go to state 51
     TMINUS    shift, and go to state 52
     TMUL      shift, and go to state 53
@@ -1505,14 +1512,14 @@ State 99
     binop  go to state 55
 
 
-State 100
+State 101
 
    15 iterator: TRANGE TLPAREN expr TRPAREN •
 
     $default  reduce using rule 15 (iterator)
 
 
-State 101
+State 102
 
    16 iterator: TRANGE TLPAREN expr TCOMMA • expr TRPAREN
    17         | TRANGE TLPAREN expr TCOMMA • expr TCOMMA expr TRPAREN
@@ -1525,24 +1532,24 @@ State 101
     ident       go to state 27
     cst_string  go to state 24
     cst_int     go to state 25
-    expr        go to state 104
+    expr        go to state 105
 
 
-State 102
+State 103
 
    32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN TCOLON ident block •
 
     $default  reduce using rule 32 (func_decl)
 
 
-State 103
+State 104
 
    18 iterator: TLLBRACK expr TCOMMA expr TRRBRACK •
 
     $default  reduce using rule 18 (iterator)
 
 
-State 104
+State 105
 
    16 iterator: TRANGE TLPAREN expr TCOMMA expr • TRPAREN
    17         | TRANGE TLPAREN expr TCOMMA expr • TCOMMA expr TRPAREN
@@ -1554,8 +1561,8 @@ State 104
     TCLE     shift, and go to state 47
     TCGT     shift, and go to state 48
     TCGE     shift, and go to state 49
-    TRPAREN  shift, and go to state 105
-    TCOMMA   shift, and go to state 106
+    TRPAREN  shift, and go to state 106
+    TCOMMA   shift, and go to state 107
     TPLUS    shift, and go to state 51
     TMINUS   shift, and go to state 52
     TMUL     shift, and go to state 53
@@ -1564,14 +1571,14 @@ State 104
     binop  go to state 55
 
 
-State 105
+State 106
 
    16 iterator: TRANGE TLPAREN expr TCOMMA expr TRPAREN •
 
     $default  reduce using rule 16 (iterator)
 
 
-State 106
+State 107
 
    17 iterator: TRANGE TLPAREN expr TCOMMA expr TCOMMA • expr TRPAREN
 
@@ -1583,10 +1590,10 @@ State 106
     ident       go to state 27
     cst_string  go to state 24
     cst_int     go to state 25
-    expr        go to state 107
+    expr        go to state 108
 
 
-State 107
+State 108
 
    17 iterator: TRANGE TLPAREN expr TCOMMA expr TCOMMA expr • TRPAREN
    44 expr: expr • binop expr
@@ -1597,7 +1604,7 @@ State 107
     TCLE     shift, and go to state 47
     TCGT     shift, and go to state 48
     TCGE     shift, and go to state 49
-    TRPAREN  shift, and go to state 108
+    TRPAREN  shift, and go to state 109
     TPLUS    shift, and go to state 51
     TMINUS   shift, and go to state 52
     TMUL     shift, and go to state 53
@@ -1606,7 +1613,7 @@ State 107
     binop  go to state 55
 
 
-State 108
+State 109
 
    17 iterator: TRANGE TLPAREN expr TCOMMA expr TCOMMA expr TRPAREN •
 

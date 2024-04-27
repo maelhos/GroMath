@@ -77,7 +77,7 @@ stmt : var_decl TSCOLON { $$ = (NStatement*)$1; }
      ;
 
 if_stmt : TIF expr TCOLON block { $$ = new NIfStatement($2, $4); }
-        | TIF expr TCOLON block TELSE block { $$ = new NIfStatement($2, $4, $6); }
+        | TIF expr TCOLON block TELSE TCOLON block { $$ = new NIfStatement($2, $4, $7); }
         ;
 
 iterator : TRANGE TLPAREN expr TRPAREN { $$ = new NRangeIterator($3);}

@@ -32,7 +32,6 @@ for test_id, test in enumerate(tests):
     comm = [GrosMathExecPath, testsPath + test]
     tr = subprocess.run(comm, capture_output=True)
     out = tr.stderr.decode().strip()
-    print(out)
     
     if tr.returncode != 0 or "error" in out.lower():
         print(colored(f"FAILED !! with retcode : {tr.returncode}", "red", attrs=["bold"]))

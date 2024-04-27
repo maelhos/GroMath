@@ -1,0 +1,21 @@
+// Loop for with basic iterator
+
+for papa: int in range(8): {
+    print("papa ");
+    print(papa);
+}
+
+for papi: int in range(0, 8): {
+    print("papi ");
+    print(papi);
+}
+
+for popo: int in range(0, 8, 2): {
+    print("popo ");
+    print(popo);
+}
+
+for math: int in [[0, 150]]: {
+    print("math ");
+    print(math);
+}

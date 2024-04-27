@@ -1,8 +1,8 @@
 // Basic if 
 
-if (5 == 4):
+if 5 == 4:
     print(0);
 
-if (5 == 4): {
+if 5 == 4: {
     print(0);
 }
