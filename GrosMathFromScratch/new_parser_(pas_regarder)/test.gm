@@ -1,8 +1,0 @@
-
-
-
-fn main() -> int {
-    // this is a test
-    printf("Hello World\n");
-    return 0;
-}
