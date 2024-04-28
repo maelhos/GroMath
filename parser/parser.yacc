@@ -150,7 +150,9 @@ call_args : { $$ = new ExpressionList(); }
 
 binop : TCEQ | TCNE | TCLT | TCLE | TCGT | TCGE 
       | TPLUS | TMINUS 
-      | TMUL | TDIV
+      | TMUL | TDIV | TMOD
+      | TPOW
+
       ;
 
 %%

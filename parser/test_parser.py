@@ -1,3 +1,4 @@
+#!/bin/python3
 from termcolor import colored
 
 from os import listdir

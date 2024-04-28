@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_PARSER_HPP_INCLUDED
-# define YY_YY_PARSER_HPP_INCLUDED
+#ifndef YY_YY_SRC_PARSER_HPP_INCLUDED
+# define YY_YY_SRC_PARSER_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
@@ -115,7 +115,7 @@ union YYSTYPE
     std::string* string;
     int token;
 
-#line 119 "parser.hpp"
+#line 119 "src/parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -130,4 +130,4 @@ extern YYSTYPE yylval;
 int yyparse (void);
 
 
-#endif /* !YY_YY_PARSER_HPP_INCLUDED  */
+#endif /* !YY_YY_SRC_PARSER_HPP_INCLUDED  */

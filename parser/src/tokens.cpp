@@ -1,6 +1,6 @@
-#line 2 "tokens.cpp"
+#line 2 "src/tokens.cpp"
 
-#line 4 "tokens.cpp"
+#line 4 "src/tokens.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -505,8 +505,8 @@ char *yytext;
 
 #define TOKEN(t) (yylval.token = t)
 //extern "C" int yywrap() {return 0; }
-#line 509 "tokens.cpp"
-#line 510 "tokens.cpp"
+#line 509 "src/tokens.cpp"
+#line 510 "src/tokens.cpp"
 
 #define INITIAL 0
 
@@ -726,7 +726,7 @@ YY_DECL
 #line 14 "tokens.l"
 
 
-#line 730 "tokens.cpp"
+#line 730 "src/tokens.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1000,7 +1000,7 @@ YY_RULE_SETUP
 #line 68 "tokens.l"
 ECHO;
 	YY_BREAK
-#line 1004 "tokens.cpp"
+#line 1004 "src/tokens.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
