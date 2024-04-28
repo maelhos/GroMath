@@ -1,0 +1,5 @@
+// Basic fn call
+
+a: int = sin(a + 78);
+
+print(a);
