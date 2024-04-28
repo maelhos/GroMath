@@ -6,7 +6,7 @@
                 "${default}",
                 "/usr/include/llvm-18",
                 "/usr/include/llvm-c-18",
-                "${workspaceFolder}/parser/include"
+                "${workspaceFolder}/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang++",

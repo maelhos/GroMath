@@ -1,12 +1,11 @@
 #!/bin/python3
-from termcolor import colored
 
+from termcolor import colored
 from os import listdir
 import subprocess
 
-
 GrosMathExecPath = "./GroMath"
-testsPath = "tests/"
+testsPath = "tests/parser/"
 
 tests = listdir(testsPath)
 
