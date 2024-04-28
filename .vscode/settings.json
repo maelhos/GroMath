@@ -74,6 +74,7 @@
         "codecvt": "cpp",
         "regex": "cpp",
         "fstream": "cpp",
-        "cfenv": "cpp"
+        "cfenv": "cpp",
+        "*.ipp": "cpp"
     }
 }

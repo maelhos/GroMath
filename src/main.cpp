@@ -1,10 +1,12 @@
 #include <iostream>
 #include "node.h"
+#include "GMcompiler.h"
 
 extern int yydebug;
 
 #define YYERROR_VERBOSE 1
 #define YYDEBUG 1
+
 
 int main(int argc, char* argv[]){   
 
@@ -12,12 +14,12 @@ int main(int argc, char* argv[]){
     if (argc < 2)
         exit(0);
 
-    FILE* f = fopen(argv[1], "r");
-    if (!f){
-        fprintf(stderr, "No such file or directory or can't open %s", argv[1]);
-        exit(1);
+    for (int i = 1; i < argc; i++){
+        // maybe paralelisation in future ...
+        GMcompiler myCompiler(argv[i]);
+        myCompiler.compile();
     }
 
-    std::cout << "Done parsing !!" << std::endl;
+    std::cout << "Done" << std::endl;
     return 0;
 }

@@ -1,7 +1,7 @@
 #!/bin/python3
 
 from termcolor import colored
-from os import listdir
+from os import listdir, environ
 import subprocess
 
 GrosMathExecPath = "./GroMath"
@@ -26,11 +26,12 @@ def pad(s, l):
     pl = l - len(s) 
     return s + " " * (pl)
 
+test_env = dict(environ) | {"TEST_PARSER": "1"}
 success = 0
 for test_id, test in enumerate(tests):
     print(colored(f"[+] Test {test_id + 1} | {pad(test, m_lens)} | {pad(descs[test_id], m_decs)} | ", "blue"), end="")
     comm = [GrosMathExecPath, testsPath + test]
-    tr = subprocess.run(comm, capture_output=True)
+    tr = subprocess.run(comm, capture_output=True, env=test_env)
     out = tr.stderr.decode().strip()
     
     if tr.returncode != 0 or "error" in out.lower():
