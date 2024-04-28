@@ -2,14 +2,15 @@
 #include "node.h"
 
 extern NBlock* programBlock;
+
 extern int yyparse();
 extern FILE *yyin;
+
 extern int yyrestart(FILE*);
 extern int yydebug;
 
 #define YYERROR_VERBOSE 1
 #define YYDEBUG 1
-
 
 int main(int argc, char* argv[]){   
 
