@@ -4,8 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
-                "/usr/include/llvm-18",
-                "/usr/include/llvm-c-18",
+                "/usr/include/llvm-19",
+                "/usr/include/llvm-c-19",
                 "${workspaceFolder}/include"
             ],
             "defines": [],

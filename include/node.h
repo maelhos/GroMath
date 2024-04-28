@@ -1,6 +1,5 @@
 #pragma once
-#include <iostream>
-#include <vector>
+#include "stdinc.h"
 #include "llvm_include.h"
 
 class CodeGenContext;
@@ -15,7 +14,7 @@ typedef std::vector<NVariableDeclaration*> VariableList;
 class Node {
 public:
     virtual ~Node() {}
-    //virtual llvm::Value* codeGen(CodeGenContext& context) { }
+    virtual llvm::Value* codeGen(CodeGenContext& context) { return nullptr; }
 };
 
 class NExpression : public Node {
