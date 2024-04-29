@@ -15,6 +15,7 @@ class Node {
 public:
     virtual ~Node() {}
     virtual llvm::Value* codeGen(CodeGenContext& context) = 0; 
+    virtual std::string toJsonStr() = 0;
 };
 
 class NExpression : public Node {
@@ -29,6 +30,7 @@ public:
     NIntConstant(const std::string& value) : value(value) { }
 
     llvm::Value* codeGen(CodeGenContext& context) override;
+    std::string toJsonStr() override;
 };
 
 class NSringConstant : public NExpression {
@@ -37,6 +39,7 @@ public:
     NSringConstant(const std::string& value) : value(value) { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NDouble : public NExpression {
@@ -45,6 +48,7 @@ public:
     NDouble(double value) : value(value) { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NIdentifier : public NExpression {
@@ -53,6 +57,7 @@ public:
     NIdentifier(const std::string& name) : name(name) { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NMethodCall : public NExpression {
@@ -64,6 +69,7 @@ public:
     NMethodCall(const NIdentifier& id) : id(id) { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NBinaryOperator : public NExpression {
@@ -75,6 +81,7 @@ public:
         lhs(lhs), rhs(rhs), op(op) { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NAssignment : public NExpression {
@@ -85,6 +92,7 @@ public:
         lhs(lhs), rhs(rhs) { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NBlock : public NExpression {
@@ -93,6 +101,7 @@ public:
     NBlock() { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NIfStatement : public NStatement {
@@ -106,6 +115,7 @@ public:
         conditionExpr(conditionExpr), IfBlock(IfBlock), ElseBlock(ElseBlock) { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NBreakStatement : public NStatement {
@@ -113,6 +123,7 @@ public:
     NBreakStatement() { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NContinueStatement : public NStatement {
@@ -120,6 +131,7 @@ public:
     NContinueStatement() { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NReturnStatement : public NStatement {
@@ -130,6 +142,7 @@ public:
         RetExpr(RetExpr) { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 
@@ -141,6 +154,7 @@ public:
         Expr(Expr), WhileBlock(WhileBlock) { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 
@@ -150,6 +164,7 @@ public:
     NExpressionStatement(NExpression& expression) : 
         expression(expression) { }
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NVariableDeclaration : public NStatement {
@@ -162,6 +177,7 @@ public:
     NVariableDeclaration(ExpressionList& type, NIdentifier& id, NExpression* assignmentExpr) :
         type(type), id(id), assignmentExpr(assignmentExpr) { }
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NFunctionDeclaration : public NStatement {
@@ -174,6 +190,7 @@ public:
             const VariableList& arguments, NBlock& block) :
         type(type), id(id), arguments(arguments), block(block) { }
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NIterator : public NExpression {};
@@ -193,6 +210,7 @@ public:
         start(start), stop(stop), incr(incr), endInclusive(inclusive) { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
 
 class NForStatement : public NStatement {
@@ -204,4 +222,5 @@ public:
         VarDecl(VarDecl), Iter(Iter), ForBlock(ForBlock) { }
 
     llvm::Value* codeGen(CodeGenContext& context);
+    std::string toJsonStr();
 };
