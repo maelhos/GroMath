@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <ostream>
+#include <sstream>
 #include <set>
 #include <map>
 #include <string>
