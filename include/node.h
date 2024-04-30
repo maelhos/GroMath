@@ -21,14 +21,6 @@ public:
 
 class NExpression : public Node {};
 class NStatement : public Node {};
-class NBlock : public NExpression {
-public:
-    StatementList statements;
-    NBlock() { }
-
-    llvm::Value* codeGen(GMLLVM* context);
-};
-
 
 class NIntConstant : public NExpression {
 public:
@@ -106,7 +98,7 @@ public:
     StatementList statements;
     NBlock() { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
     std::string toJsonStr() override;
 };
 
