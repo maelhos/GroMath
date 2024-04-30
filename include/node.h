@@ -106,7 +106,8 @@ public:
     StatementList statements;
     NBlock() { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
+    std::string toJsonStr() override;
 };
 
 class NIfStatement : public NStatement {
