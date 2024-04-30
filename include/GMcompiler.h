@@ -1,10 +1,9 @@
 #pragma once
 #include "stdinc.h"
-#include "node.h"
 #include "llvm_include.h"
 #include "Environement.h"
-
-extern NBlock* programBlock;
+#include "utils.h"
+#include "node.h"
 
 extern int yyparse();
 extern FILE *yyin;
@@ -12,8 +11,9 @@ extern int yyrestart(FILE*);
 
 using Env = std::shared_ptr<Environement>;
 
-class GMLLVM {
-private:
+extern NBlock* programBlock;
+
+struct GMLLVM {
     NBlock* entry;
     Env GlobalEnv;
     llvm::Function* fn; // current function being processed
@@ -23,54 +23,17 @@ private:
     std::unique_ptr<llvm::IRBuilder<>> varsBuilder;
     std::unique_ptr<llvm::IRBuilder<>> builder;
 
-    llvm::BasicBlock* createBB(const std::string& name, llvm::Function* fn = nullptr) {
-        return llvm::BasicBlock::Create(*ctx, name, fn);
-    }
+    llvm::BasicBlock* createBB(const std::string& name, llvm::Function* fn = nullptr);
+    
+    llvm::Function* createFunctionProto(const std::string& fnName, llvm::FunctionType* fnType, Env env);
+    void createFunctionBlock(llvm::Function* fn);
+    llvm::Function* createFunction(const std::string& fnName, llvm::FunctionType* fnType, Env env);
 
-    llvm::Function* createFunctionProto(const std::string& fnName, llvm::FunctionType* fnType, Env env) {
-        auto fnc = llvm::Function::Create(fnType, llvm::Function::ExternalLinkage, fnName, *module);
-        llvm::verifyFunction(*fnc);
-        env->define(fnName, fnc);
-        return fnc;
-    }
+    llvm::GlobalVariable* createGlobalVar(const std::string& name, llvm::Constant* init);
 
-    void createFunctionBlock(llvm::Function* fn) {
-        auto entry = createBB("entry", fn);
-        builder->SetInsertPoint(entry);
-    }
+    GMLLVM(NBlock* entry);
 
-    llvm::Function* createFunction(const std::string& fnName, llvm::FunctionType* fnType, Env env) {
-        auto fnc = module->getFunction(fnName);
-
-        if (fnc == nullptr)
-            fnc = createFunctionProto(fnName, fnType, env);
-        
-
-        createFunctionBlock(fnc);
-        return fnc;
-    }
-public: 
-    GMLLVM(NBlock* entry) : entry(entry) {
-        ctx = std::make_unique<llvm::LLVMContext>();
-        module = std::make_unique<llvm::Module>("GroMathLLVM", *ctx);
-
-        builder = std::make_unique<llvm::IRBuilder<>>(*ctx);
-        varsBuilder = std::make_unique<llvm::IRBuilder<>>(*ctx);
-    }
-
-    std::unique_ptr<llvm::Module> assemble(){
-        fn = createFunction("main", 
-            llvm::FunctionType::get(builder->getInt32Ty(), false),
-            GlobalEnv);
-
-        CodeGenContext ctx;
-        auto res = entry->codeGen(ctx);
-        auto i32Res = builder->CreateIntCast(res, builder->getInt32Ty(), true);
-        
-        builder->CreateRet(i32Res);
-        
-        return std::move(module);
-    }
+    std::unique_ptr<llvm::Module> assemble();
 };
 
 
@@ -89,7 +52,7 @@ public:
             fprintf(stderr, "No such file or directory or can't open %s\n", toCompile);
             exit(1);
         }
-        outName.append(".o");
+        outName.append(".ll");
     }
 
     void compile(){

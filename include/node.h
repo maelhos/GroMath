@@ -1,34 +1,40 @@
 #pragma once
 #include "stdinc.h"
 #include "llvm_include.h"
+#include "Environement.h"
 
-class CodeGenContext {};
+struct GMLLVM;
 class NStatement;
 class NExpression;
 class NVariableDeclaration;
 
-typedef std::vector<NStatement*> StatementList;
-typedef std::vector<NExpression*> ExpressionList;
-typedef std::vector<NVariableDeclaration*> VariableList;
+using StatementList = std::vector<NStatement*>;
+using ExpressionList = std::vector<NExpression*>;
+using VariableList = std::vector<NVariableDeclaration*>;
 
 class Node {
 public:
     virtual ~Node() {}
-    virtual llvm::Value* codeGen(CodeGenContext& context) = 0; 
+    virtual llvm::Value* codeGen(GMLLVM* context) = 0; 
 };
 
-class NExpression : public Node {
+class NExpression : public Node {};
+class NStatement : public Node {};
+class NBlock : public NExpression {
+public:
+    StatementList statements;
+    NBlock() { }
+
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
-class NStatement : public Node {
-};
 
 class NIntConstant : public NExpression {
 public:
     const std::string value;
     NIntConstant(const std::string& value) : value(value) { }
 
-    llvm::Value* codeGen(CodeGenContext& context) override;
+    llvm::Value* codeGen(GMLLVM* context) override;
 };
 
 class NSringConstant : public NExpression {
@@ -36,7 +42,7 @@ public:
     const std::string value;
     NSringConstant(const std::string& value) : value(value) { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NDouble : public NExpression {
@@ -44,7 +50,7 @@ public:
     double value;
     NDouble(double value) : value(value) { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NIdentifier : public NExpression {
@@ -52,7 +58,7 @@ public:
     std::string name;
     NIdentifier(const std::string& name) : name(name) { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NMethodCall : public NExpression {
@@ -63,7 +69,7 @@ public:
         id(id), arguments(arguments) { }
     NMethodCall(const NIdentifier& id) : id(id) { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NBinaryOperator : public NExpression {
@@ -74,7 +80,7 @@ public:
     NBinaryOperator(NExpression& lhs, int op, NExpression& rhs) :
         lhs(lhs), rhs(rhs), op(op) { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NAssignment : public NExpression {
@@ -84,15 +90,7 @@ public:
     NAssignment(NIdentifier& lhs, NExpression& rhs) : 
         lhs(lhs), rhs(rhs) { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
-};
-
-class NBlock : public NExpression {
-public:
-    StatementList statements;
-    NBlock() { }
-
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NIfStatement : public NStatement {
@@ -105,21 +103,21 @@ public:
     NIfStatement(NExpression* conditionExpr, NBlock* IfBlock, NBlock* ElseBlock) :
         conditionExpr(conditionExpr), IfBlock(IfBlock), ElseBlock(ElseBlock) { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NBreakStatement : public NStatement {
 public:
     NBreakStatement() { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NContinueStatement : public NStatement {
 public:
     NContinueStatement() { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NReturnStatement : public NStatement {
@@ -129,7 +127,7 @@ public:
     NReturnStatement(NExpression* RetExpr) :
         RetExpr(RetExpr) { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 
@@ -140,7 +138,7 @@ public:
     NWhileStatement(NExpression* Expr, NBlock* WhileBlock) :
         Expr(Expr), WhileBlock(WhileBlock) { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 
@@ -149,7 +147,7 @@ public:
     NExpression& expression;
     NExpressionStatement(NExpression& expression) : 
         expression(expression) { }
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NVariableDeclaration : public NStatement {
@@ -161,7 +159,7 @@ public:
         type(type), id(id) { }
     NVariableDeclaration(ExpressionList& type, NIdentifier& id, NExpression* assignmentExpr) :
         type(type), id(id), assignmentExpr(assignmentExpr) { }
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NFunctionDeclaration : public NStatement {
@@ -173,7 +171,7 @@ public:
     NFunctionDeclaration(NIdentifier& type, const NIdentifier& id, 
             const VariableList& arguments, NBlock& block) :
         type(type), id(id), arguments(arguments), block(block) { }
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NIterator : public NExpression {};
@@ -192,7 +190,7 @@ public:
     NRangeIterator(NExpression* start, NExpression* stop, NExpression* incr, bool inclusive = false) : 
         start(start), stop(stop), incr(incr), endInclusive(inclusive) { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
 
 class NForStatement : public NStatement {
@@ -203,5 +201,7 @@ public:
     NForStatement(NVariableDeclaration* VarDecl, NIterator* Iter, NBlock* ForBlock) :
         VarDecl(VarDecl), Iter(Iter), ForBlock(ForBlock) { }
 
-    llvm::Value* codeGen(CodeGenContext& context);
+    llvm::Value* codeGen(GMLLVM* context);
 };
+
+extern NBlock* programBlock;
