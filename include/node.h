@@ -60,11 +60,11 @@ public:
 
 class NMethodCall : public NExpression {
 public:
-    const NIdentifier& id;
+    NIdentifier& id;
     ExpressionList arguments;
-    NMethodCall(const NIdentifier& id, ExpressionList& arguments) :
+    NMethodCall(NIdentifier& id, ExpressionList& arguments) :
         id(id), arguments(arguments) { }
-    NMethodCall(const NIdentifier& id) : id(id) { }
+    NMethodCall(NIdentifier& id) : id(id) { }
 
     llvm::Value* codeGen(GMLLVM* context) override;
     std::string toJsonStr() override;

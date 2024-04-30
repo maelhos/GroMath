@@ -1,35 +1,47 @@
 #include "node.h"
 
 std::string NIntConstant::toJsonStr(){
-    return nullptr;
+    return "{'type': 'expression', 'token' : 'integer', 'value' : " + this->value + "}";
 }
 
 std::string NSringConstant::toJsonStr(){
-    return nullptr;
+    return "{'type': 'expression', 'token' : 'string', 'value' : '" + this->value + "'}";
 }
 
 std::string NDouble::toJsonStr(){
-    return nullptr;
+    return "{'type': 'expression', 'token' : 'double', 'value' : " + std::to_string(this->value) + "}";
 }
 
 std::string NIdentifier::toJsonStr(){
-    return nullptr;
+    return "{'type': 'expression', 'token' : 'identifier', 'value' : '" + this->name + "'}";
 }
 
 std::string NMethodCall::toJsonStr(){
-    return nullptr;
+    std::string res = "{'type': 'expression', 'token' : 'method', 'id' : '" + id.toJsonStr() + "', 'arguments': [";
+    for (auto expr : arguments) {
+        res += expr->toJsonStr();
+        res += ',';
+    }
+    res += "]}";
+    return res;
 }
 
 std::string NBinaryOperator::toJsonStr(){
-    return nullptr;
+    return "{'type' : 'expression', 'token' : 'operator', 'op' : " + std::to_string(op) + ", 'lhs' : " + lhs.toJsonStr() + ", 'rhs' : " + rhs.toJsonStr() + "}";
 }
 
 std::string NAssignment::toJsonStr(){
-    return nullptr;
+    return "{'type' : 'expression', 'token' : 'assignment', 'lhs' : " + lhs.toJsonStr() + ", 'rhs' : " + rhs.toJsonStr() + "}";
 }
 
 std::string NBlock::toJsonStr(){
-    return nullptr;
+    std::string res = "{'type' : 'expression', 'token' : 'block', 'statements' : [";
+    for (auto statement : statements) {
+        res += statement->toJsonStr();
+        res += ', ';
+    }
+    res += "]}";
+    return res;
 }
 
 std::string NIfStatement::toJsonStr(){
