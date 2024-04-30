@@ -181,10 +181,10 @@ public:
 class NFunctionDeclaration : public NStatement {
 public:
     NIdentifier& type;
-    const NIdentifier& id;
+    NIdentifier& id;
     VariableList arguments;
     NBlock& block;
-    NFunctionDeclaration(NIdentifier& type, const NIdentifier& id, 
+    NFunctionDeclaration(NIdentifier& type, NIdentifier& id, 
             const VariableList& arguments, NBlock& block) :
         type(type), id(id), arguments(arguments), block(block) { }
     llvm::Value* codeGen(GMLLVM* context) override;
