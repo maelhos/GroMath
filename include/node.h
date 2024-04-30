@@ -16,6 +16,7 @@ class Node {
 public:
     virtual ~Node() {}
     virtual llvm::Value* codeGen(GMLLVM* context) = 0; 
+    virtual std::string toJsonStr() = 0;
 };
 
 class NExpression : public Node {};
@@ -35,6 +36,7 @@ public:
     NIntConstant(const std::string& value) : value(value) { }
 
     llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NSringConstant : public NExpression {
@@ -42,7 +44,8 @@ public:
     const std::string value;
     NSringConstant(const std::string& value) : value(value) { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NDouble : public NExpression {
@@ -50,7 +53,8 @@ public:
     double value;
     NDouble(double value) : value(value) { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NIdentifier : public NExpression {
@@ -58,7 +62,8 @@ public:
     std::string name;
     NIdentifier(const std::string& name) : name(name) { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NMethodCall : public NExpression {
@@ -69,7 +74,8 @@ public:
         id(id), arguments(arguments) { }
     NMethodCall(const NIdentifier& id) : id(id) { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NBinaryOperator : public NExpression {
@@ -80,7 +86,8 @@ public:
     NBinaryOperator(NExpression& lhs, int op, NExpression& rhs) :
         lhs(lhs), rhs(rhs), op(op) { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NAssignment : public NExpression {
@@ -90,7 +97,16 @@ public:
     NAssignment(NIdentifier& lhs, NExpression& rhs) : 
         lhs(lhs), rhs(rhs) { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
+};
+
+class NBlock : public NExpression {
+public:
+    StatementList statements;
+    NBlock() { }
+
+    llvm::Value* codeGen(CodeGenContext& context);
 };
 
 class NIfStatement : public NStatement {
@@ -103,21 +119,24 @@ public:
     NIfStatement(NExpression* conditionExpr, NBlock* IfBlock, NBlock* ElseBlock) :
         conditionExpr(conditionExpr), IfBlock(IfBlock), ElseBlock(ElseBlock) { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NBreakStatement : public NStatement {
 public:
     NBreakStatement() { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NContinueStatement : public NStatement {
 public:
     NContinueStatement() { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NReturnStatement : public NStatement {
@@ -127,7 +146,8 @@ public:
     NReturnStatement(NExpression* RetExpr) :
         RetExpr(RetExpr) { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 
@@ -138,7 +158,8 @@ public:
     NWhileStatement(NExpression* Expr, NBlock* WhileBlock) :
         Expr(Expr), WhileBlock(WhileBlock) { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 
@@ -147,7 +168,8 @@ public:
     NExpression& expression;
     NExpressionStatement(NExpression& expression) : 
         expression(expression) { }
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NVariableDeclaration : public NStatement {
@@ -159,7 +181,8 @@ public:
         type(type), id(id) { }
     NVariableDeclaration(ExpressionList& type, NIdentifier& id, NExpression* assignmentExpr) :
         type(type), id(id), assignmentExpr(assignmentExpr) { }
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NFunctionDeclaration : public NStatement {
@@ -171,7 +194,8 @@ public:
     NFunctionDeclaration(NIdentifier& type, const NIdentifier& id, 
             const VariableList& arguments, NBlock& block) :
         type(type), id(id), arguments(arguments), block(block) { }
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NIterator : public NExpression {};
@@ -190,7 +214,8 @@ public:
     NRangeIterator(NExpression* start, NExpression* stop, NExpression* incr, bool inclusive = false) : 
         start(start), stop(stop), incr(incr), endInclusive(inclusive) { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 class NForStatement : public NStatement {
@@ -201,7 +226,8 @@ public:
     NForStatement(NVariableDeclaration* VarDecl, NIterator* Iter, NBlock* ForBlock) :
         VarDecl(VarDecl), Iter(Iter), ForBlock(ForBlock) { }
 
-    llvm::Value* codeGen(GMLLVM* context);
+    llvm::Value* codeGen(GMLLVM* context) override;
+    std::string toJsonStr() override;
 };
 
 extern NBlock* programBlock;
