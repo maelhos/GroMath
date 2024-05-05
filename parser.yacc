@@ -26,6 +26,7 @@
    they represent.
  */
 %token <string> TIDENTIFIER TINTEGER TCSTSTRING // TDOUBLE
+%token <token> TTRUE TFALSE
 %token <token> TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL
 %token <token> TLPAREN TRPAREN TLBRACE TRBRACE TLBRACK TRBRACK TLLBRACK TRRBRACK TCOMMA TDOT TCOLON TSCOLON
 %token <token> TPLUS TMINUS TMUL TDIV TMOD TPOW
@@ -141,6 +142,8 @@ expr : ident TEQUAL expr { $$ = new NAssignment(*$1, *$3); }
      | cst_string
      | expr binop expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
      | TLPAREN expr TRPAREN { $$ = $2; }
+     | TTRUE { $$ = new NBool(true); }
+     | TFALSE { $$ = new NBool(false); }
      ;
     
 call_args : { $$ = new ExpressionList(); }

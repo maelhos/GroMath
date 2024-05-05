@@ -16,6 +16,7 @@ extern NBlock* programBlock;
 struct GMLLVM {
     NBlock* entry;
     Env GlobalEnv;
+    
     llvm::Function* fn; // current function being processed
     std::unique_ptr<llvm::LLVMContext> ctx;
     std::unique_ptr<llvm::Module> module;

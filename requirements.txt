@@ -24,6 +24,7 @@ clang-tidy-19
 
 libllvmlibc-19-dev
 
-
 flex
 bison
+
+jq

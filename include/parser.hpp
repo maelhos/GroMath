@@ -57,42 +57,44 @@ extern int yydebug;
     TIDENTIFIER = 258,             /* TIDENTIFIER  */
     TINTEGER = 259,                /* TINTEGER  */
     TCSTSTRING = 260,              /* TCSTSTRING  */
-    TCEQ = 261,                    /* TCEQ  */
-    TCNE = 262,                    /* TCNE  */
-    TCLT = 263,                    /* TCLT  */
-    TCLE = 264,                    /* TCLE  */
-    TCGT = 265,                    /* TCGT  */
-    TCGE = 266,                    /* TCGE  */
-    TEQUAL = 267,                  /* TEQUAL  */
-    TLPAREN = 268,                 /* TLPAREN  */
-    TRPAREN = 269,                 /* TRPAREN  */
-    TLBRACE = 270,                 /* TLBRACE  */
-    TRBRACE = 271,                 /* TRBRACE  */
-    TLBRACK = 272,                 /* TLBRACK  */
-    TRBRACK = 273,                 /* TRBRACK  */
-    TLLBRACK = 274,                /* TLLBRACK  */
-    TRRBRACK = 275,                /* TRRBRACK  */
-    TCOMMA = 276,                  /* TCOMMA  */
-    TDOT = 277,                    /* TDOT  */
-    TCOLON = 278,                  /* TCOLON  */
-    TSCOLON = 279,                 /* TSCOLON  */
-    TPLUS = 280,                   /* TPLUS  */
-    TMINUS = 281,                  /* TMINUS  */
-    TMUL = 282,                    /* TMUL  */
-    TDIV = 283,                    /* TDIV  */
-    TMOD = 284,                    /* TMOD  */
-    TPOW = 285,                    /* TPOW  */
-    TIF = 286,                     /* TIF  */
-    TELSE = 287,                   /* TELSE  */
-    TFN = 288,                     /* TFN  */
-    TWHILE = 289,                  /* TWHILE  */
-    TFOR = 290,                    /* TFOR  */
-    TIN = 291,                     /* TIN  */
-    TRET = 292,                    /* TRET  */
-    TBREAK = 293,                  /* TBREAK  */
-    TCONTINUE = 294,               /* TCONTINUE  */
-    TRANGE = 295,                  /* TRANGE  */
-    TRARROW = 296                  /* TRARROW  */
+    TTRUE = 261,                   /* TTRUE  */
+    TFALSE = 262,                  /* TFALSE  */
+    TCEQ = 263,                    /* TCEQ  */
+    TCNE = 264,                    /* TCNE  */
+    TCLT = 265,                    /* TCLT  */
+    TCLE = 266,                    /* TCLE  */
+    TCGT = 267,                    /* TCGT  */
+    TCGE = 268,                    /* TCGE  */
+    TEQUAL = 269,                  /* TEQUAL  */
+    TLPAREN = 270,                 /* TLPAREN  */
+    TRPAREN = 271,                 /* TRPAREN  */
+    TLBRACE = 272,                 /* TLBRACE  */
+    TRBRACE = 273,                 /* TRBRACE  */
+    TLBRACK = 274,                 /* TLBRACK  */
+    TRBRACK = 275,                 /* TRBRACK  */
+    TLLBRACK = 276,                /* TLLBRACK  */
+    TRRBRACK = 277,                /* TRRBRACK  */
+    TCOMMA = 278,                  /* TCOMMA  */
+    TDOT = 279,                    /* TDOT  */
+    TCOLON = 280,                  /* TCOLON  */
+    TSCOLON = 281,                 /* TSCOLON  */
+    TPLUS = 282,                   /* TPLUS  */
+    TMINUS = 283,                  /* TMINUS  */
+    TMUL = 284,                    /* TMUL  */
+    TDIV = 285,                    /* TDIV  */
+    TMOD = 286,                    /* TMOD  */
+    TPOW = 287,                    /* TPOW  */
+    TIF = 288,                     /* TIF  */
+    TELSE = 289,                   /* TELSE  */
+    TFN = 290,                     /* TFN  */
+    TWHILE = 291,                  /* TWHILE  */
+    TFOR = 292,                    /* TFOR  */
+    TIN = 293,                     /* TIN  */
+    TRET = 294,                    /* TRET  */
+    TBREAK = 295,                  /* TBREAK  */
+    TCONTINUE = 296,               /* TCONTINUE  */
+    TRANGE = 297,                  /* TRANGE  */
+    TRARROW = 298                  /* TRARROW  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -115,7 +117,7 @@ union YYSTYPE
     std::string* string;
     int token;
 
-#line 119 "src/parser.hpp"
+#line 121 "src/parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

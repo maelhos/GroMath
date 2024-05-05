@@ -27,6 +27,9 @@
 "continue"              return TOKEN(TCONTINUE);
 "range"                 return TOKEN(TRANGE);
 
+"true"                  return TOKEN(TTRUE);
+"false"                 return TOKEN(TFALSE);
+
 "->"                    return TOKEN(TRARROW);
 
 [a-zA-Z_][a-zA-Z0-9_]*  SAVE_TOKEN; return TIDENTIFIER;

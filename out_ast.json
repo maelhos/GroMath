@@ -1,0 +1,1 @@
+{"type" : "expression", "token" : "block", "statements" : [{"type" : "statement", "token" : "variableDeclaration", "id" : {"type": "expression", "token" : "identifier", "value" : "a"}, "type" : [{"type": "expression", "token" : "identifier", "value" : "int"}], "expression" : {"type": "expression", "token" : "integer", "value" : 5}}]}
