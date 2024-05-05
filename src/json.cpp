@@ -89,7 +89,12 @@ std::string NVariableDeclaration::toJsonStr(){
         if (i != type.size() - 1)
             res += ", ";
     }
-    res += "], \"expression\" : " + assignmentExpr->toJsonStr() + "}";
+    
+    if (assignmentExpr)
+        res += "], \"expression\" : " + assignmentExpr->toJsonStr() + "}";
+    else
+        res += "]}";
+        
     return res;
 }
 
