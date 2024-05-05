@@ -62,9 +62,10 @@ std::unique_ptr<llvm::Module> GMLLVM::assemble(){
         GlobalEnv);
 
     auto res = entry->codeGen(this, GlobalEnv);
-    auto json = entry->toJsonStr();
 
     if (getenv("JSON_AST")){
+        auto json = entry->toJsonStr();
+
         printf("\nPrinting JSON :\n");
 
         FILE* json_out = fopen("out_ast.json", "w");
@@ -73,6 +74,7 @@ std::unique_ptr<llvm::Module> GMLLVM::assemble(){
 
         system("cat out_ast.json | jq");
     }
+    
     //temp for testings
     res = builder->getInt32(42);
     auto i32Res = builder->CreateIntCast(res, builder->getInt32Ty(), true);

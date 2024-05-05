@@ -3,7 +3,7 @@
 #include "utils.h"
 
 llvm::Value* NIntConstant::codeGen(GMLLVM* ctx, Env env){
-    // must be tune for later
+    // must be tune for later TODO: biginted... 
     int32_t val = strtol(value.c_str(), 0, 10);
 
     return ctx->builder->getInt32(val);;
@@ -20,7 +20,7 @@ llvm::Value* NDouble::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NBool::codeGen(GMLLVM* ctx, Env env){
-    return nullptr;
+    return ctx->builder->getInt1(value);
 }
 
 llvm::Value* NIdentifier::codeGen(GMLLVM* ctx, Env env){
@@ -56,6 +56,11 @@ llvm::Value* NContinueStatement::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NReturnStatement::codeGen(GMLLVM* ctx, Env env){
+    if (RetExpr)
+        ctx->builder->CreateRet(RetExpr->codeGen(ctx, env));
+    else
+        ctx->builder->CreateRetVoid();
+        
     return nullptr;
 }
 
@@ -72,6 +77,9 @@ llvm::Value* NVariableDeclaration::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NFunctionDeclaration::codeGen(GMLLVM* ctx, Env env){
+    // big to do...
+
+    
     return nullptr;
 }
 

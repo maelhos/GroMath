@@ -1,5 +1,4 @@
 
-fn test(a: int, b: int -> int) : int {
-    c: int = 5;
-    ret c + a;
+fn main() : int {
+    ret 78;
 }
