@@ -34,6 +34,57 @@ llvm::GlobalVariable* GMLLVM::createGlobalVar(const std::string& name, llvm::Con
     return var;
 }
 
+llvm::Value* GMLLVM::allocVar(const std::string& name, llvm::Type* type, Env env){
+    varsBuilder->SetInsertPoint(&fn->getEntryBlock());
+
+    auto varAlloc = varsBuilder->CreateAlloca(type, 0, name.c_str());
+
+    env->define(name, varAlloc);
+
+    return varAlloc;
+}
+
+llvm::FunctionType* GMLLVM::extractFunctionType(NFunctionDeclaration& fnExp){
+    auto returnType = extractVarType(fnExp.retType);
+
+    std::vector<llvm::Type*> paramTypes{};
+
+    for (auto &&decl : fnExp.arguments)
+        paramTypes.push_back(extractVarType(&decl->type));
+
+    return llvm::FunctionType::get(returnType, paramTypes, false);
+}
+
+llvm::Value* GMLLVM::compileFunction(NFunctionDeclaration& fnExp, std::string fnName, Env env){
+    // save
+    auto prevFn = fn;
+    auto prevBlock = builder->GetInsertBlock();
+
+    auto newFn = createFunction(fnName, extractFunctionType(fnExp), env);
+    fn = newFn;
+
+    int idx = 0;
+    auto fnEnv = std::make_shared<Environement>(
+        std::map<std::string, llvm::Value*>{}, env
+    );
+
+    for (auto &&arg : fn->args()){
+        auto argName = fnExp.arguments[idx++]->id.name;
+
+        arg.setName(argName);
+
+        auto argBinding = allocVar(argName, arg.getType(), fnEnv);
+        builder->CreateStore(&arg, argBinding);
+    }
+    
+    fnExp.block.codeGen(this, fnEnv);
+
+    builder->SetInsertPoint(prevBlock);
+    fn = prevFn;
+
+    return newFn;
+}
+    
 GMLLVM::GMLLVM(NBlock* entry) : entry(entry) {
     //setup global LLVM stuff
     ctx = std::make_unique<llvm::LLVMContext>();
@@ -57,9 +108,9 @@ GMLLVM::GMLLVM(NBlock* entry) : entry(entry) {
 }
 
 std::unique_ptr<llvm::Module> GMLLVM::assemble(){
-    fn = createFunction("main", 
-        llvm::FunctionType::get(builder->getInt32Ty(), false),
-        GlobalEnv);
+    //fn = createFunction("main", 
+    //    llvm::FunctionType::get(builder->getInt32Ty(), false),
+    //    GlobalEnv);
 
     auto res = entry->codeGen(this, GlobalEnv);
 
@@ -76,10 +127,10 @@ std::unique_ptr<llvm::Module> GMLLVM::assemble(){
     }
     
     //temp for testings
-    res = builder->getInt32(42);
-    auto i32Res = builder->CreateIntCast(res, builder->getInt32Ty(), true);
+    //res = builder->getInt32(42);
+    //auto i32Res = builder->CreateIntCast(res, builder->getInt32Ty(), true);
     
-    builder->CreateRet(i32Res);
+    //builder->CreateRet(i32Res);
     
     return std::move(module);
 }

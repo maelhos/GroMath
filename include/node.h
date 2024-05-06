@@ -190,13 +190,13 @@ public:
 
 class NFunctionDeclaration : public NStatement {
 public:
-    NIdentifier& type;
+    ExpressionList* retType;
     NIdentifier& id;
     VariableList arguments;
     NBlock& block;
-    NFunctionDeclaration(NIdentifier& type, NIdentifier& id, 
+    NFunctionDeclaration(ExpressionList* retType, NIdentifier& id, 
             const VariableList& arguments, NBlock& block) :
-        type(type), id(id), arguments(arguments), block(block) { }
+        retType(retType), id(id), arguments(arguments), block(block) { }
     llvm::Value* codeGen(GMLLVM* context, Env env) override;
     std::string toJsonStr() override;
 };

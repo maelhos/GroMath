@@ -116,8 +116,8 @@ var_decl : ident TCOLON type { $$ = new NVariableDeclaration(*$3, *$1); }
          | ident TCOLON type TEQUAL expr { $$ = new NVariableDeclaration(*$3, *$1, $5); }
          ;
         
-func_decl : TFN ident TLPAREN func_decl_args TRPAREN TCOLON ident block 
-            { $$ = new NFunctionDeclaration(*$7, *$2, *$4, *$8); delete $4; }
+func_decl : TFN ident TLPAREN func_decl_args TRPAREN TCOLON type block 
+            { $$ = new NFunctionDeclaration($7, *$2, *$4, *$8); delete $4; }
           ;
 
 func_decl_args : /*blank*/  { $$ = new VariableList(); }

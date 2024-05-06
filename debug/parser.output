@@ -58,7 +58,7 @@ Grammar
    30 var_decl: ident TCOLON type
    31         | ident TCOLON type TEQUAL expr
 
-   32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN TCOLON ident block
+   32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN TCOLON type block
 
    33 func_decl_args: ε
    34               | var_decl
@@ -184,7 +184,7 @@ Nonterminals, with rules where they appear
         on right: 13 14 19 20 32
     type <exprvec> (56)
         on left: 28 29
-        on right: 29 30 31
+        on right: 29 30 31 32
     var_decl <var_decl> (57)
         on left: 30 31
         on right: 4 19 34 35
@@ -321,7 +321,7 @@ State 7
 
 State 8
 
-   32 func_decl: TFN • ident TLPAREN func_decl_args TRPAREN TCOLON ident block
+   32 func_decl: TFN • ident TLPAREN func_decl_args TRPAREN TCOLON type block
 
     TIDENTIFIER  shift, and go to state 1
 
@@ -605,7 +605,7 @@ State 31
 
 State 32
 
-   32 func_decl: TFN ident • TLPAREN func_decl_args TRPAREN TCOLON ident block
+   32 func_decl: TFN ident • TLPAREN func_decl_args TRPAREN TCOLON type block
 
     TLPAREN  shift, and go to state 62
 
@@ -913,7 +913,7 @@ State 61
 
 State 62
 
-   32 func_decl: TFN ident TLPAREN • func_decl_args TRPAREN TCOLON ident block
+   32 func_decl: TFN ident TLPAREN • func_decl_args TRPAREN TCOLON type block
 
     TIDENTIFIER  shift, and go to state 1
 
@@ -1153,7 +1153,7 @@ State 74
 
 State 75
 
-   32 func_decl: TFN ident TLPAREN func_decl_args • TRPAREN TCOLON ident block
+   32 func_decl: TFN ident TLPAREN func_decl_args • TRPAREN TCOLON type block
    35 func_decl_args: func_decl_args • TCOMMA var_decl
 
     TRPAREN  shift, and go to state 87
@@ -1301,7 +1301,7 @@ State 86
 
 State 87
 
-   32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN • TCOLON ident block
+   32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN • TCOLON type block
 
     TCOLON  shift, and go to state 97
 
@@ -1489,11 +1489,12 @@ State 96
 
 State 97
 
-   32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN TCOLON • ident block
+   32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN TCOLON • type block
 
     TIDENTIFIER  shift, and go to state 1
 
-    ident  go to state 103
+    type   go to state 103
+    ident  go to state 69
 
 
 State 98
@@ -1561,7 +1562,8 @@ State 102
 
 State 103
 
-   32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN TCOLON ident • block
+   29 type: type • TRARROW ident
+   32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN TCOLON type • block
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -1577,6 +1579,7 @@ State 103
     TRET         shift, and go to state 11
     TBREAK       shift, and go to state 12
     TCONTINUE    shift, and go to state 13
+    TRARROW      shift, and go to state 83
 
     stmt           go to state 72
     if_stmt        go to state 17
@@ -1643,7 +1646,7 @@ State 106
 
 State 107
 
-   32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN TCOLON ident block •
+   32 func_decl: TFN ident TLPAREN func_decl_args TRPAREN TCOLON type block •
 
     $default  reduce using rule 32 (func_decl)
 
