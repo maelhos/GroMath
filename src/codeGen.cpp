@@ -40,6 +40,10 @@ llvm::Value* NAssignment::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NBlock::codeGen(GMLLVM* ctx, Env env){
+    printf("NBlock\n");
+    for (auto&& stmt : statements)
+        stmt->codeGen(ctx, env);
+    
     return nullptr;
 }
 
@@ -56,6 +60,7 @@ llvm::Value* NContinueStatement::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NReturnStatement::codeGen(GMLLVM* ctx, Env env){
+    printf("NRet\n");
     if (RetExpr)
         ctx->builder->CreateRet(RetExpr->codeGen(ctx, env));
     else
@@ -77,10 +82,7 @@ llvm::Value* NVariableDeclaration::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NFunctionDeclaration::codeGen(GMLLVM* ctx, Env env){
-    // big to do...
-
-    
-    return nullptr;
+    return ctx->compileFunction(this, env);
 }
 
 llvm::Value* NRangeIterator::codeGen(GMLLVM* ctx, Env env){

@@ -44,23 +44,23 @@ llvm::Value* GMLLVM::allocVar(const std::string& name, llvm::Type* type, Env env
     return varAlloc;
 }
 
-llvm::FunctionType* GMLLVM::extractFunctionType(NFunctionDeclaration& fnExp){
-    auto returnType = extractVarType(fnExp.retType);
+llvm::FunctionType* GMLLVM::extractFunctionType(NFunctionDeclaration* fnExp){
+    auto returnType = extractVarType(fnExp->retType);
 
     std::vector<llvm::Type*> paramTypes{};
 
-    for (auto &&decl : fnExp.arguments)
+    for (auto &&decl : fnExp->arguments)
         paramTypes.push_back(extractVarType(&decl->type));
 
     return llvm::FunctionType::get(returnType, paramTypes, false);
 }
 
-llvm::Value* GMLLVM::compileFunction(NFunctionDeclaration& fnExp, std::string fnName, Env env){
+llvm::Value* GMLLVM::compileFunction(NFunctionDeclaration* fnExp, Env env){
     // save
     auto prevFn = fn;
     auto prevBlock = builder->GetInsertBlock();
 
-    auto newFn = createFunction(fnName, extractFunctionType(fnExp), env);
+    auto newFn = createFunction(fnExp->id.name, extractFunctionType(fnExp), env);
     fn = newFn;
 
     int idx = 0;
@@ -69,7 +69,7 @@ llvm::Value* GMLLVM::compileFunction(NFunctionDeclaration& fnExp, std::string fn
     );
 
     for (auto &&arg : fn->args()){
-        auto argName = fnExp.arguments[idx++]->id.name;
+        auto argName = fnExp->arguments[idx++]->id.name;
 
         arg.setName(argName);
 
@@ -77,7 +77,7 @@ llvm::Value* GMLLVM::compileFunction(NFunctionDeclaration& fnExp, std::string fn
         builder->CreateStore(&arg, argBinding);
     }
     
-    fnExp.block.codeGen(this, fnEnv);
+    fnExp->block.codeGen(this, fnEnv);
 
     builder->SetInsertPoint(prevBlock);
     fn = prevFn;

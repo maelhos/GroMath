@@ -29,11 +29,11 @@ struct GMLLVM {
     llvm::Type* convertType(NIdentifier* ident);
     llvm::Type* extractVarType(ExpressionList* type);
 
-    llvm::FunctionType* extractFunctionType(NFunctionDeclaration& fnExp);
+    llvm::FunctionType* extractFunctionType(NFunctionDeclaration* fnExp);
     llvm::Function* createFunctionProto(const std::string& fnName, llvm::FunctionType* fnType, Env env);
     void createFunctionBlock(llvm::Function* fn);
     llvm::Function* createFunction(const std::string& fnName, llvm::FunctionType* fnType, Env env);
-    llvm::Value* compileFunction(NFunctionDeclaration& fnExp, std::string fnName, Env env);
+    llvm::Value* compileFunction(NFunctionDeclaration* fnExp, Env env);
 
     llvm::GlobalVariable* createGlobalVar(const std::string& name, llvm::Constant* init);
     llvm::Value* allocVar(const std::string& name, llvm::Type* type, Env env);

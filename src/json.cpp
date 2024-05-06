@@ -100,16 +100,16 @@ std::string NVariableDeclaration::toJsonStr(){
 
 std::string NFunctionDeclaration::toJsonStr(){
     std::string res = "{\"type\" : \"statement\", \"token\" : \"functionDeclaration\", \"id\" : " + id.toJsonStr() 
-        + ", \"type\" : "; 
+        + ", \"type\" : ["; 
     
     for (int i = 0; i < retType->size(); i++) {
         res += retType->at(i)->toJsonStr();
 
-        if (i != arguments.size() - 1)
+        if (i != retType->size() - 1)
             res += ", ";
     }
 
-    res += ", \"arguments\" : [";
+    res += "], \"arguments\" : [";
     for (int i = 0; i < arguments.size(); i++) {
         res += arguments[i]->toJsonStr();
 
