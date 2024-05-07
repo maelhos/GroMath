@@ -1,4 +1,9 @@
 
-fn main() : int {
-    ret 78;
+fn test(b: int) : int {
+    a: int = 2;
+    ret a + b * b;
+}
+
+fn main(argc: int) : int {
+    ret test(argc);
 }

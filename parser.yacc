@@ -78,7 +78,25 @@ stmt : var_decl TSCOLON { $$ = (NStatement*)$1; }
      ;
 
 if_stmt : TIF expr TCOLON block { $$ = new NIfStatement($2, $4); }
+        | TIF expr TCOLON stmt 
+            { auto tbl = new NBlock();
+                   tbl->statements.push_back($4);
+                   $$ = new NIfStatement($2, tbl); }
         | TIF expr TCOLON block TELSE TCOLON block { $$ = new NIfStatement($2, $4, $7); }
+        | TIF expr TCOLON stmt TELSE TCOLON block
+            { auto tbl = new NBlock();
+                   tbl->statements.push_back($4);
+                   $$ = new NIfStatement($2, tbl, $7); }
+        | TIF expr TCOLON block TELSE TCOLON stmt
+            { auto tbl = new NBlock();
+                   tbl->statements.push_back($7);
+                   $$ = new NIfStatement($2, $4, tbl); }
+        | TIF expr TCOLON stmt TELSE TCOLON stmt 
+            { auto tbl1 = new NBlock();
+                   tbl1->statements.push_back($4);
+                   auto tbl2 = new NBlock();
+                   tbl1->statements.push_back($4);
+                   $$ = new NIfStatement($2, tbl1, tbl2); }
         ;
 
 iterator : TRANGE TLPAREN expr TRPAREN { $$ = new NRangeIterator($3);}
@@ -88,9 +106,17 @@ iterator : TRANGE TLPAREN expr TRPAREN { $$ = new NRangeIterator($3);}
          ;
 
 for_stmt : TFOR var_decl TIN iterator TCOLON block { $$ = new NForStatement($2, $4, $6); }
+         | TFOR var_decl TIN iterator TCOLON stmt 
+                 { auto tbl = new NBlock();
+                   tbl->statements.push_back($6);
+                   $$ = new NForStatement($2, $4, tbl); }
          ;
 
 while_stmt : TWHILE expr TCOLON block { $$ = new NWhileStatement($2, $4); }
+           | TWHILE expr TCOLON stmt 
+                { auto tbl = new NBlock();
+                  tbl->statements.push_back($4);
+                  $$ = new NWhileStatement($2, tbl); }
            ;
 
 break_stmt : TBREAK {$$ = new NBreakStatement();}
@@ -105,7 +131,6 @@ ret_stmt : TRET {$$ = new NReturnStatement();}
 
 block : TLBRACE stmts TRBRACE { $$ = $2; }
       | TLBRACE TRBRACE { $$ = new NBlock(); }
-      | stmt { $$ = new NBlock(); $$->statements.push_back($1);}
       ;
 
 type : ident { $$ = new ExpressionList(); $$->push_back($1); }

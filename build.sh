@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILES="src/json.cpp src/type.cpp src/utils.cpp src/GMcompiler.cpp src/codeGen.cpp src/parser.cpp src/tokens.cpp src/main.cpp"
+FILES="src/operator.cpp src/json.cpp src/type.cpp src/utils.cpp src/GMcompiler.cpp src/codeGen.cpp src/parser.cpp src/tokens.cpp src/main.cpp"
 bison -d -o src/parser.cpp parser.yacc -t -v
 mv src/parser.hpp include/parser.hpp
 mv src/parser.output debug/

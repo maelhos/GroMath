@@ -38,6 +38,7 @@ struct GMLLVM {
     llvm::GlobalVariable* createGlobalVar(const std::string& name, llvm::Constant* init);
     llvm::Value* allocVar(const std::string& name, llvm::Type* type, Env env);
 
+    llvm::Value* resolveOperatorInt(int tok, llvm::Value* lhs, llvm::Value* rhs);
     GMLLVM(NBlock* entry);
 
     std::unique_ptr<llvm::Module> assemble();

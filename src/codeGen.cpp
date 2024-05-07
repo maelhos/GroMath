@@ -24,25 +24,61 @@ llvm::Value* NBool::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NIdentifier::codeGen(GMLLVM* ctx, Env env){
+    printf("NIdentifier : \"%s\" \n", name.c_str());
+    auto value = env->lookup(name);
+                
+    // local vars
+    if (auto localVar = llvm::dyn_cast<llvm::AllocaInst>(value))
+        return ctx->builder->CreateLoad(localVar->getAllocatedType(),
+            localVar, name.c_str());
+
+    // global vars
+    if (auto globalVar = llvm::dyn_cast<llvm::GlobalVariable>(value))
+        return ctx->builder->CreateLoad(globalVar->getInitializer()->getType(), 
+            globalVar, name.c_str());
+
+    // if this called then is a variable load (because of the way the codeGen is built)
     return nullptr;
 }
 
 llvm::Value* NMethodCall::codeGen(GMLLVM* ctx, Env env){
-    return nullptr;
+    auto f = env->lookup(id.name);
+    auto fun = llvm::dyn_cast<llvm::Function>(f);
+
+    std::vector<llvm::Value*> args{};
+
+    for (auto&& arg : arguments)
+        args.push_back(arg->codeGen(ctx, env));
+
+    if (!fun){
+        printf("Identifier \"%s\" is not callable\n", id.name.c_str());
+        exit(1);
+    }
+
+    return ctx->builder->CreateCall(fun, args);
 }
 
 llvm::Value* NBinaryOperator::codeGen(GMLLVM* ctx, Env env){
-    return nullptr;
+    // BIG TODO : operator per type + typing system ayaya
+    // for now everything is an int
+
+    return ctx->resolveOperatorInt(op, lhs.codeGen(ctx, env), rhs.codeGen(ctx, env));
 }
 
 llvm::Value* NAssignment::codeGen(GMLLVM* ctx, Env env){
-    return nullptr;
+    auto val = rhs.codeGen(ctx, env);
+    auto varBinding = env->lookup(lhs.name);
+    ctx->builder->CreateStore(val, varBinding);
+
+    return val;
 }
 
 llvm::Value* NBlock::codeGen(GMLLVM* ctx, Env env){
-    printf("NBlock\n");
+    auto blockEnv = std::make_shared<Environement>(
+        std::map<std::string, llvm::Value*>{}, env);
+
     for (auto&& stmt : statements)
-        stmt->codeGen(ctx, env);
+        stmt->codeGen(ctx, blockEnv);
     
     return nullptr;
 }
@@ -60,7 +96,6 @@ llvm::Value* NContinueStatement::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NReturnStatement::codeGen(GMLLVM* ctx, Env env){
-    printf("NRet\n");
     if (RetExpr)
         ctx->builder->CreateRet(RetExpr->codeGen(ctx, env));
     else
@@ -74,10 +109,23 @@ llvm::Value* NWhileStatement::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NExpressionStatement::codeGen(GMLLVM* ctx, Env env){
+    // in this case only assignement and function call are interesting
+    if (auto assign = dynamic_cast<NAssignment*>(&expression))
+        assign->codeGen(ctx, env);
+
+    if (auto call = dynamic_cast<NMethodCall*>(&expression))
+        call->codeGen(ctx, env);
+
     return nullptr;
 }
 
 llvm::Value* NVariableDeclaration::codeGen(GMLLVM* ctx, Env env){
+    auto varTy = ctx->extractVarType(&type);
+    auto varBinding = ctx->allocVar(id.name, varTy, env);
+
+    if (assignmentExpr)
+        ctx->builder->CreateStore(assignmentExpr->codeGen(ctx, env), varBinding);
+
     return nullptr;
 }
 

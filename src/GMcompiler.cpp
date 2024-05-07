@@ -38,7 +38,7 @@ llvm::Value* GMLLVM::allocVar(const std::string& name, llvm::Type* type, Env env
     varsBuilder->SetInsertPoint(&fn->getEntryBlock());
 
     auto varAlloc = varsBuilder->CreateAlloca(type, 0, name.c_str());
-
+    
     env->define(name, varAlloc);
 
     return varAlloc;
