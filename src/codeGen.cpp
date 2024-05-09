@@ -10,7 +10,7 @@ llvm::Value* NIntConstant::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NSringConstant::codeGen(GMLLVM* ctx, Env env){
-    const std::string val(value.substr(1, value.length() - 1));
+    const std::string val(value.substr(1, value.length() - 2));
     return ctx->builder->CreateGlobalStringPtr(parseStrSpecialChars(val));
 }
 
@@ -42,8 +42,14 @@ llvm::Value* NIdentifier::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NMethodCall::codeGen(GMLLVM* ctx, Env env){
-    auto f = env->lookup(id.name);
-    auto fun = llvm::dyn_cast<llvm::Function>(f);
+    // special function to be done here for now just printf
+    llvm::Function* fun;
+    if (id.name == "printf")
+        fun = ctx->module->getFunction("printf");
+    else{
+        auto f = env->lookup(id.name);
+        fun = llvm::dyn_cast<llvm::Function>(f);
+    }
 
     std::vector<llvm::Value*> args{};
 

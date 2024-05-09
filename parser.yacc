@@ -40,14 +40,15 @@
  */
 
 %type <ident> ident
-%type <expr> cst_int expr cst_string
+%type <expr> cst_int expr cst_string binop
 %type <varvec> func_decl_args 
 %type <exprvec> call_args type
 %type <block> program stmts block
 %type <stmt> stmt func_decl if_stmt for_stmt while_stmt ret_stmt break_stmt continue_stmt
 %type <iter> iterator
 %type <var_decl> var_decl
-%type <token> binop
+
+%start program
 
 /* Operator precedence for mathematical operators */
 %left TCEQ TCNE TCLT TCLE TCGT TCGE 
@@ -56,7 +57,6 @@
 %left TMUL TDIV
 %right TPOW 
 
-%start program
 %%
 
 program : stmts { programBlock = $1; }
@@ -165,7 +165,7 @@ expr : ident TEQUAL expr { $$ = new NAssignment(*$1, *$3); }
      | ident { $$ = $1; }
      | cst_int
      | cst_string
-     | expr binop expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
+     | binop
      | TLPAREN expr TRPAREN { $$ = $2; }
      | TTRUE { $$ = new NBool(true); }
      | TFALSE { $$ = new NBool(false); }
@@ -176,11 +176,18 @@ call_args : { $$ = new ExpressionList(); }
           | call_args TCOMMA expr  { $1->push_back($3); }
           ;
 
-binop : TCEQ | TCNE | TCLT | TCLE | TCGT | TCGE 
-      | TPLUS | TMINUS 
-      | TMUL | TDIV | TMOD
-      | TPOW
-
+binop : expr TCEQ   expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
+      | expr TCNE   expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
+      | expr TCLT   expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
+      | expr TCLE   expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
+      | expr TCGT   expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
+      | expr TCGE   expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
+      | expr TPLUS  expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
+      | expr TMINUS expr { $$ = new NBinaryOperator(*$1, $2, *$3); } 
+      | expr TMUL   expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
+      | expr TDIV   expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
+      | expr TMOD   expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
+      | expr TPOW   expr { $$ = new NBinaryOperator(*$1, $2, *$3); }
       ;
 
 %%

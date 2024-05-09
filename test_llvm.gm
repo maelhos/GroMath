@@ -5,5 +5,6 @@ fn test(b: int) : int {
 }
 
 fn main(argc: int) : int {
-    ret test(argc);
+    printf("Test : %d\n", test(argc));
+    ret 0;
 }

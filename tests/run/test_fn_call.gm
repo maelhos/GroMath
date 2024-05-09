@@ -1,0 +1,10 @@
+//420
+//
+
+fn test() : int {
+    ret 420;
+}
+
+fn main() : int {
+    ret test();
+}

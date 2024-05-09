@@ -112,6 +112,15 @@ std::unique_ptr<llvm::Module> GMLLVM::assemble(){
     //    llvm::FunctionType::get(builder->getInt32Ty(), false),
     //    GlobalEnv);
 
+    // for debug
+    module->getOrInsertFunction("printf", 
+            llvm::FunctionType::get(
+                builder->getInt32Ty(),
+                // builder->getInt8PtrTy(),
+                builder->getInt8Ty()->getPointerTo(),
+                true
+            ));
+
     auto res = entry->codeGen(this, GlobalEnv);
 
     if (getenv("JSON_AST")){

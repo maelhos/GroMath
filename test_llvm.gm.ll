@@ -2,6 +2,9 @@
 source_filename = "GroMathLLVM"
 
 @VERSION = global i32 1, align 4
+@0 = private unnamed_addr constant [11 x i8] c"Test : %d\0A\00", align 1
+
+declare i32 @printf(ptr, ...)
 
 define i32 @test(i32 %b) {
 entry:
@@ -23,5 +26,6 @@ entry:
   store i32 %argc, ptr %argc1, align 4
   %argc2 = load i32, ptr %argc1, align 4
   %0 = call i32 @test(i32 %argc2)
-  ret i32 %0
+  %1 = call i32 (ptr, ...) @printf(ptr @0, i32 %0)
+  ret i32 0
 }
