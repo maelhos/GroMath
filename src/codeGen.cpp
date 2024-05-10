@@ -90,6 +90,36 @@ llvm::Value* NBlock::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NIfStatement::codeGen(GMLLVM* ctx, Env env){
+    auto condExpr = conditionExpr->codeGen(ctx, env);
+
+    auto thenBlock  = ctx->createBB("then", ctx->fn);
+    auto ifEndBlock = ctx->createBB("ifend");
+
+    llvm::BasicBlock* elseBlock;
+    if (ElseBlock) elseBlock = ctx->createBB("else");
+    else elseBlock = ifEndBlock;
+
+    ctx->builder->CreateCondBr(condExpr, thenBlock, elseBlock);
+    ctx->builder->SetInsertPoint(thenBlock);
+
+    IfBlock->codeGen(ctx, env);
+    ctx->builder->CreateBr(ifEndBlock);
+
+    thenBlock = ctx->builder->GetInsertBlock();
+
+    ctx->fn->insert(ctx->fn->end(), elseBlock);
+    ctx->builder->SetInsertPoint(elseBlock);
+
+    if (ElseBlock) {
+        ElseBlock->codeGen(ctx, env);
+        ctx->builder->CreateBr(ifEndBlock);
+
+        elseBlock = ctx->builder->GetInsertBlock();
+
+        ctx->fn->insert(ctx->fn->end(), ifEndBlock);
+        ctx->builder->SetInsertPoint(ifEndBlock);
+    }
+
     return nullptr;
 }
 

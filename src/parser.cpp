@@ -1331,7 +1331,7 @@ yyreduce:
             { auto tbl1 = new NBlock();
                    tbl1->statements.push_back((yyvsp[-3].stmt));
                    auto tbl2 = new NBlock();
-                   tbl1->statements.push_back((yyvsp[-3].stmt));
+                   tbl2->statements.push_back((yyvsp[0].stmt));
                    (yyval.stmt) = new NIfStatement((yyvsp[-5].expr), tbl1, tbl2); }
 #line 1337 "src/parser.cpp"
     break;

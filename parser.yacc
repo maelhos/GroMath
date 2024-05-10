@@ -95,7 +95,7 @@ if_stmt : TIF expr TCOLON block { $$ = new NIfStatement($2, $4); }
             { auto tbl1 = new NBlock();
                    tbl1->statements.push_back($4);
                    auto tbl2 = new NBlock();
-                   tbl1->statements.push_back($4);
+                   tbl2->statements.push_back($7);
                    $$ = new NIfStatement($2, tbl1, tbl2); }
         ;
 

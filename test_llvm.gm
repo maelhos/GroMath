@@ -1,10 +1,14 @@
 
-fn test(b: int) : int {
-    a: int = 2;
-    ret a + b * b;
+
+fn sum(n: int) : int {
+    if n == 0:
+        ret 0;
+
+    ret sum(n - 1) + n;
 }
 
-fn main(argc: int) : int {
-    printf("Test : %d\n", test(argc));
+fn main() : int {
+    printf("%d\n", sum(10));
+
     ret 0;
 }
