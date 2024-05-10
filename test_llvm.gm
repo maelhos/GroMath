@@ -1,14 +1,17 @@
 
 
-fn sum(n: int) : int {
+fn fib(n: int) : int {
     if n == 0:
-        ret 0;
-
-    ret sum(n - 1) + n;
+        ret 1;
+    else: {
+        if n == 1:
+            ret 1;
+        ret fib(n - 1) + fib(n - 2);
+    }
 }
 
 fn main() : int {
-    printf("%d\n", sum(10));
+    printf("%d\n", fib(10));
 
     ret 0;
 }

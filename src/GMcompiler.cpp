@@ -1,5 +1,10 @@
 #include "GMcompiler.h"
 
+bool GMLLVM::isCurentBlockTerminated(){
+    auto blk = builder->GetInsertBlock();
+    return blk && (blk->begin() != blk->end()) && blk->rbegin()->isTerminator();
+}
+
 llvm::BasicBlock* GMLLVM::createBB(const std::string& name, llvm::Function* fn) {
     return llvm::BasicBlock::Create(*ctx, name, fn);
 }
@@ -108,9 +113,6 @@ GMLLVM::GMLLVM(NBlock* entry) : entry(entry) {
 }
 
 std::unique_ptr<llvm::Module> GMLLVM::assemble(){
-    //fn = createFunction("main", 
-    //    llvm::FunctionType::get(builder->getInt32Ty(), false),
-    //    GlobalEnv);
 
     // for debug
     module->getOrInsertFunction("printf", 

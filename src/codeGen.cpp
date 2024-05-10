@@ -83,8 +83,11 @@ llvm::Value* NBlock::codeGen(GMLLVM* ctx, Env env){
     auto blockEnv = std::make_shared<Environement>(
         std::map<std::string, llvm::Value*>{}, env);
 
-    for (auto&& stmt : statements)
+    for (auto&& stmt : statements){
         stmt->codeGen(ctx, blockEnv);
+        auto blk = ctx->builder->GetInsertBlock();
+        if(ctx->isCurentBlockTerminated()) break; // dont compile unreachable things ...
+    }
     
     return nullptr;
 }
@@ -103,18 +106,16 @@ llvm::Value* NIfStatement::codeGen(GMLLVM* ctx, Env env){
     ctx->builder->SetInsertPoint(thenBlock);
 
     IfBlock->codeGen(ctx, env);
-    ctx->builder->CreateBr(ifEndBlock);
-
-    thenBlock = ctx->builder->GetInsertBlock();
+    if (!ctx->isCurentBlockTerminated()) // dont insert branch if already returning...
+        ctx->builder->CreateBr(ifEndBlock);
 
     ctx->fn->insert(ctx->fn->end(), elseBlock);
     ctx->builder->SetInsertPoint(elseBlock);
 
     if (ElseBlock) {
         ElseBlock->codeGen(ctx, env);
-        ctx->builder->CreateBr(ifEndBlock);
-
-        elseBlock = ctx->builder->GetInsertBlock();
+        if (!ctx->isCurentBlockTerminated()) // dont insert branch if already returning...
+            ctx->builder->CreateBr(ifEndBlock);
 
         ctx->fn->insert(ctx->fn->end(), ifEndBlock);
         ctx->builder->SetInsertPoint(ifEndBlock);

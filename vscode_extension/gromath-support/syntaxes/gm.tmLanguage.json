@@ -1,0 +1,32 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "GroMath",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.gm",
+				"match": "\\b(if|while|for|ret)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.gm",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.gm",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "source.gm"
+}

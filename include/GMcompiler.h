@@ -24,6 +24,7 @@ struct GMLLVM {
     std::unique_ptr<llvm::IRBuilder<>> varsBuilder;
     std::unique_ptr<llvm::IRBuilder<>> builder;
 
+    bool isCurentBlockTerminated();
     llvm::BasicBlock* createBB(const std::string& name, llvm::Function* fn = nullptr);
     
     llvm::Type* convertType(NIdentifier* ident);

@@ -1,0 +1,25 @@
+{
+  "name": "gromath-support",
+  "displayName": "GroMath Support",
+  "description": "Language support and coloring for GroMath",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.89.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "gm",
+      "aliases": ["GroMath", "gm"],
+      "extensions": [".gm"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "gm",
+      "scopeName": "root_scope_gramm",
+      "path": "./syntaxes/gm.tmLanguage.json"
+    }]
+  }
+}
