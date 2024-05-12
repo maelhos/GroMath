@@ -1,0 +1,14 @@
+{
+    "type" : "expression",
+    "token" : "assignment",
+    "rhs" : {
+        "type" : "expression",
+        "token" : "identifier",
+        "value" : "x"
+    },
+    "lhs" : {
+        "type" : "expression", 
+        "token" : "integer", 
+        "value" : 10
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "type" : "statement",
+    "token" : "if",
+    "condition" : {
+        "type" : "expression",
+        "token" : "bool",
+        "value" : false
+    },
+    "ifblock" : {
+        "type" : "expression",
+        "token" : "assignment",
+        "rhs" : {
+            "type" : "expression",
+            "token" : "identifier",
+            "value" : "x"
+        },
+        "lhs" : {
+            "type" : "expression", 
+            "token" : "integer", 
+            "value" : 10
+        }
+    },
+    "elseblock" : {
+        "type" : "expression",
+        "token" : "assignment",
+        "rhs" : {
+            "type" : "expression",
+            "token" : "identifier",
+            "value" : "x"
+        },
+        "lhs" : {
+            "type" : "expression", 
+            "token" : "integer", 
+            "value" : 21
+        }
+    }
+}

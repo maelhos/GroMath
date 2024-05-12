@@ -1,0 +1,43 @@
+{
+    "type" : "statement",
+    "token" : "functionDeclaration",
+    "id" : {
+        "type" : "expression",
+        "token" : "identifier",
+        "value" : "x"
+    },
+    "typed" : [
+        {
+            "type" : "expression",
+            "token" : "string",
+            "value" : "int"
+        }
+    ],
+    "arguments" : [
+        {
+            "type" : "expression", 
+            "token" : "integer", 
+            "value" : 10
+        },
+        {
+            "type" : "expression", 
+            "token" : "integer", 
+            "value" : 21
+        }
+    ],
+    "block" : {
+        "type" : "expression",
+        "token" : "block",
+        "statements" : [
+            {
+                "type" : "statement",
+                "token" : "return",
+                "returnExpr" : {
+                    "type" : "expression",
+                    "token" : "integer",
+                    "value" : 10
+                }
+            }
+        ]
+    }
+}

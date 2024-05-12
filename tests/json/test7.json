@@ -1,0 +1,9 @@
+{
+    "type" : "statement",
+    "token" : "return",
+    "returnExpr" : {
+        "type" : "expression",
+        "token" : "integer",
+        "value" : 10
+    }
+}

@@ -1,4 +1,5 @@
 from graphviz import *
+import json
 
 """
 for this part, we'll get the json extracted using virtual methods implemented in json.cpp to retrieve some kind of json conversion of our ASTs
@@ -34,92 +35,281 @@ def parse_tokens():
 
 def handle_expression(g, json, dic, i = 0):
     if (json == {}):
-        return 
+        return i
     elif (json['token'] in ['integer', 'double', 'bool', 'string', 'identifier']):
         g.node(f'{i}', json['token'])
-        g.node(f'{i + 1}', json['value'])
+        g.node(f'{i + 1}', str(json['value']))
         g.edge(f'{i}', f'{i + 1}')
         i += 2
-        return
+        return i
     elif (json['token'] == 'method'):
         g.node(f'{i}', json['token'])
-        g.node(f'{i + 1}', json['id'])
         j = i # we keep our old i to do the linkage in the graph !
-        i += 2
+        i += 1
+
+        i = handle_expression(g, json['id'], dic, i)
+        g.edge(f'{j}', f'{j + 1}')
+
+        g.node(f'{i}', "arguments")
+        g.edge(f'{j}', f'{i}')
+        j = i
+        i += 1
+
+        k = i # a cursor to get from old value of i to new value of i
         for elem in json['arguments']:
-            handle_expression(g, elem, dic, i)
-        k = j + 1 # a cursor to get from old value of i to new value of i
-        while (k != i):
+            i = handle_expression(g, elem, dic, i)
             g.edge(f'{j}', f'{k}')
-            k += 1
-        return
+            k = i
+        return i
     elif (json['token'] == 'operator'):
         g.node(f'{i}', json['token'])
-        j = i # keeping track of our main node token 
-        i += 1
-
-        handle_expression(g, json['lhs'], dic, i)
-        g.edge(f'{j}', f'{j + 1}') # linking lhs with token 
-
-        g.node(f'{i}', dic[json['op']]) # placing our operator in the middle
-        g.edge(f'{j}', f'{i}') # linking our token to the operator
-        i += 1
-
-        k = i # keeping track of the beginning of rhs
-        handle_expression(g, json['rhs'], dic, i)
-        g.edge(f'{j}', f'{k}') # linking rhs with token 
-        return 
-    elif (json['token'] == 'assignment'):
-        g.node(f'{i}', json['token'])
-        j = i # keeping track of our main node token
-        i += 1
-
-        handle_expression(g, json['lhs'], dic, i)
-        g.edge(f'{j}', f'{i}') # linking our token to the lhs
+        g.node(f'{i + 1}', dic[json['op']])
+        g.edge(f'{i}', f'{i + 1}')
+        j = i
+        i += 2
 
         k = i
-        handle_expression(g, json['rhs'], dic, i)
+        i = handle_expression(g, json['lhs'], dic, i)
         g.edge(f'{j}', f'{k}')
-        return 
-    else: # case of a block
+
+        k = i 
+        i = handle_expression(g, json['rhs'], dic, i)
+        g.edge(f'{j}', f'{k}')
+        return i
+    elif (json['token'] == 'assignment'):
         g.node(f'{i}', json['token'])
-        j = i # keeping track of our main token
+        j = i
         i += 1
-        for element in json['statements']:
-            k = i # main token of the current statement
-            handle_statement(g, element, dic, i)
-            g.edge(f'{j}', f'{k}') # linking our main token to the statement 
-        return
+
+        k = i
+        i = handle_expression(g, json['lhs'], dic, i)
+        g.edge(f'{j}', f'{k}')
+
+        k = i 
+        i = handle_expression(g, json['rhs'], dic, i)
+        g.edge(f'{j}', f'{k}')
+        return i
+    elif (json['token'] == 'block'):
+        g.node(f'{i}', json['token'])
+        j = i
+        i += 1
+
+        k = i
+        for elem in json['statements']:
+            i = handle_statement(g, elem, dic, i)
+            g.edge(f'{j}', f'{k}')
+            k = i
+        return i
+    else:
+        print("error : unknown expression...")
+        assert(False)
+
 
 def handle_statement(g, json, dic, i = 0):
-    if (json == {}):
-        return 
-    elif (json['token'] == 'return'):
+    if (json['token'] == 'if'):
         g.node(f'{i}', json['token'])
-        g.node(f'{i + 1}', json['returnExpr'])
-        g.edge(f'{i}', f'{i + 1}')
-        i += 2
-        return
-    elif (json['token'] == 'expression'):
-        handle_expression(g, json['expr'], dic, i)
-        return 
-    elif (json['token'] in ['continue', 'break']):
-        g.node(f'{i}', json['token'])
-        i += 1
-        return
-    elif (json['token'] == 'if'):
-        g.node(f'{i}', json['token'])
-        j = i 
+        j = i
         i += 1
 
-        return
+        g.node(f'{i}', "condition")
+        g.edge(f'{j}', f'{i}')
+        k = i
+        i += 1
+
+        l = i
+        i = handle_expression(g, json['condition'], dic, i)
+        g.edge(f'{k}', f'{l}')
+
+        g.node(f'{i}', "ifblock")
+        g.edge(f'{j}', f'{i}')
+        k = i
+        i += 1
+
+        l = i
+        i = handle_expression(g, json['ifblock'], dic, i)
+        g.edge(f'{k}', f'{l}')
+
+        if (json['elseblock'] != {}):
+            g.node(f'{i}', "elseblock")
+            g.edge(f'{j}', f'{i}')
+            k = i
+            i += 1
+
+            l = i
+            i = handle_expression(g, json['elseblock'], dic, i)
+            g.edge(f'{k}', f'{l}')
+        return i
+    elif (json['token'] in ['break', 'continue']):
+        g.node(f'{i}', json['token'])
+        j = i
+        i += 1
+        return i
+    elif (json['token'] == 'return'):
+        g.node(f'{i}', json['token'])
+        j = i
+        i += 1
+
+        g.node(f'{i}', "returnExpr")
+        g.edge(f'{j}', f'{i}')
+        k = i
+        i += 1
+
+        l = i
+        i = handle_expression(g, json['returnExpr'], dic, i)
+        g.edge(f'{k}', f'{l}')
+
+        return i
     elif (json['token'] == 'while'):
         g.node(f'{i}', json['token'])
         j = i
         i += 1
 
-        return
+        g.node(f'{i}', "condition")
+        g.edge(f'{j}', f'{i}')
+        k = i
+        i += 1
 
+        l = i
+        i = handle_expression(g, json['condition'], dic, i)
+        g.edge(f'{k}', f'{l}')
+
+        l = i
+        i = handle_expression(g, json['block'], dic, i)
+        g.edge(f'{j}', f'{l}')
+        return i
+    elif (json['token'] == 'expression'):
+        return handle_expression(g, json['block'], dic, i)
+    elif (json['token'] == 'variableDeclaration'):
+        g.node(f'{i}', json['token'])
+        j = i
+        i += 1
+
+        i = handle_expression(g, json['id'], dic, i)
+        g.edge(f'{j}', f'{j + 1}')
+
+        g.node(f'{i}', "type")
+        g.edge(f'{j}', f'{i}')
+        l = i
+        i += 1
+        k = i
+        for elem in json['typed']:
+            i = handle_expression(g, elem, dic, i)
+            g.edge(f'{l}', f'{k}')
+            k = i
+
+        g.node(f'{i}', "expression")
+        g.edge(f'{j}', f'{i}')
+        k = i
+        i += 1
+
+        l = i
+        i = handle_expression(g, json['expression'], dic, i)
+        g.edge(f'{k}', f'{l}')
+        return i
+    elif (json['token'] == 'functionDeclaration'):
+        g.node(f'{i}', json['token'])
+        j = i
+        i += 1
+
+        i = handle_expression(g, json['id'], dic, i)
+        g.edge(f'{j}', f'{j + 1}')
+
+        g.node(f'{i}', "type")
+        g.edge(f'{j}', f'{i}')
+        l = i
+        i += 1
+        k = i
+        for elem in json['typed']:
+            i = handle_expression(g, elem, dic, i)
+            g.edge(f'{l}', f'{k}')
+            k = i
+        
+        g.node(f'{i}', "arguments")
+        g.edge(f'{j}', f'{i}')
+        l = i
+        i += 1
+
+        k = i # a cursor to get from old value of i to new value of i
+        for elem in json['arguments']:
+            i = handle_expression(g, elem, dic, i)
+            g.edge(f'{l}', f'{k}')
+            k = i
+
+        l = i
+        i = handle_expression(g, json['block'], dic, i)
+        g.edge(f'{j}', f'{l}')
+        return i
+    elif (json['token'] == 'iterator'):
+        g.node(f'{i}', json['token'])
+        j = i
+        i += 1
+
+        g.node(f'{i}', "start")
+        g.edge(f'{j}', f'{i}')
+        k = i
+        i += 1
+
+        l = i
+        i = handle_expression(g, json['start'], dic, i)
+        g.edge(f'{k}', f'{l}')
+
+        g.node(f'{i}', "stop")
+        g.edge(f'{j}', f'{i}')
+        k = i
+        i += 1
+
+        l = i
+        i = handle_expression(g, json['stop'], dic, i)
+        g.edge(f'{k}', f'{l}')
+
+        g.node(f'{i}', "increment")
+        g.edge(f'{j}', f'{i}')
+        k = i
+        i += 1
+
+        l = i
+        i = handle_expression(g, json['increment'], dic, i)
+        g.edge(f'{k}', f'{l}')
+
+        g.node(f'{i}', "end")
+        g.edge(f'{j}', f'{i}')
+        k = i
+        i += 1
+
+        g.node(f'{i}', str(json['end']))
+        g.edge(f'{k}', f'{i}')
+        i += 1
+        return i
+    elif (json['token'] == 'for'):
+        g.node(f'{i}', json['token'])
+        j = i
+        i += 1
+
+        g.node(f'{i}', "declaration")
+        g.edge(f'{j}', f'{i}')
+        k = i
+        i += 1
+
+        l = i
+        i = handle_expression(g, json['declaration'], dic, i)
+        g.edge(f'{k}', f'{l}')
+
+        g.node(f'{i}', "iter")
+        g.edge(f'{j}', f'{i}')
+        k = i
+        i += 1
+
+        l = i
+        i = handle_expression(g, json['iter'], dic, i)
+        g.edge(f'{k}', f'{l}')
+
+        l = i
+        i = handle_expression(g, json['block'], dic, i)
+        g.edge(f'{j}', f'{l}')
+        return i
+    else:
+        print("error : unknown statement...")
+        assert(False)
 
 
 def show_tree(json, dic):
@@ -142,14 +332,31 @@ def show_tree(json, dic):
     return
 
 
-def get_json():
+def get_json(file):
     """
     Function that handles getting the json token to then convert this all into a big tree.
     """
     j = {}
-    with open('out_ast.json', 'r') as f:
+    with open(file, 'r') as f:
         j = f.read()
-    return j
+    return json.loads(j)
+
+
+def test(i):
+    print("[*] Getting Dictionnary")
+    d = parse_tokens()
+    print("[+] Dictionnary found : ")
+    
+    print("[*] Getting Json")
+    j = get_json(f'tests/json/test{i}.json')
+    print("[+] Json found!")
+    print(j)
+
+    print("[*] Now generating tree")
+    show_tree(j, d)
+    return
+
+
 
 def main():
     print("[*] Getting Dictionnary")
@@ -157,8 +364,9 @@ def main():
     print("[+] Dictionnary found : ")
     
     print("[*] Getting Json")
-    j = get_json()
+    j = get_json('out_ast.json')
     print("[+] Json found!")
+    print(j)
 
     print("[*] Now generating tree")
     show_tree(j, d)
@@ -168,6 +376,11 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # for i in range(1, 13):
+    #     test(i)
+    #     res = input("waiting for approval")
+    #     if (res == 'NOP'):
+    #        assert(False)
 
 
 
@@ -187,8 +400,8 @@ statements :
 - return (with returnExpr)
 - while (with condition and block)
 - expression (with expr)
-- variableDeclaration (with id, type and expression)
-- functionDeclaration (with id, type, arguments and block)
+- variableDeclaration (with id, typed and expression)
+- functionDeclaration (with id, typed, arguments and block)
 - iterator (with start, stop and incr)
 - for (with declaration, iter and block)
 """

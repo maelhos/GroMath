@@ -1,0 +1,24 @@
+{
+    "type" : "statement",
+    "token" : "while",
+    "condition" : {
+        "type" : "expression",
+        "token" : "bool",
+        "value" : true
+    },
+    "block" : {
+        "type" : "expression",
+        "token" : "block",
+        "statements" : [
+            {
+                "type" : "statement",
+                "token" : "return",
+                "returnExpr" : {
+                    "type" : "expression",
+                    "token" : "integer",
+                    "value" : 10
+                }
+            }
+        ]
+    }
+}

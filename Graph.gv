@@ -1,0 +1,43 @@
+graph {
+	0 [label=block]
+	1 [label=functionDeclaration]
+	2 [label=identifier]
+	3 [label=main]
+	2 -- 3
+	1 -- 2
+	4 [label=type]
+	1 -- 4
+	5 [label=identifier]
+	6 [label=int]
+	5 -- 6
+	4 -- 5
+	7 [label=arguments]
+	1 -- 7
+	8 [label=block]
+	9 [label=return]
+	10 [label=returnExpr]
+	9 -- 10
+	11 [label=operator]
+	12 [label=TMUL]
+	11 -- 12
+	13 [label=integer]
+	14 [label=2]
+	13 -- 14
+	11 -- 13
+	15 [label=operator]
+	16 [label=TPLUS]
+	15 -- 16
+	17 [label=integer]
+	18 [label=5]
+	17 -- 18
+	15 -- 17
+	19 [label=integer]
+	20 [label=1]
+	19 -- 20
+	15 -- 19
+	11 -- 15
+	10 -- 11
+	8 -- 9
+	1 -- 8
+	0 -- 1
+}

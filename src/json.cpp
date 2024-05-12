@@ -1,11 +1,17 @@
 #include "node.h"
 
+std::string handleQuotes(std::string value) {
+    value.erase(value.begin());
+    value.erase(value.end() - 1);
+    return value;
+}
+
 std::string NIntConstant::toJsonStr(){
-    return "{\"type\": \"expression\", \"token\" : \"integer\", \"value\" : " + value + "}";
+    return "{\"type\": \"expression\", \"token\" : \"integer\", \"value\" : " + handleQuotes(value) + "}";
 }
 
 std::string NSringConstant::toJsonStr(){
-    return "{\"type\": \"expression\", \"token\" : \"string\", \"value\" : \"" + value + "\"}";
+    return "{\"type\": \"expression\", \"token\" : \"string\", \"value\" : \"" + handleQuotes(value) + "\"}";
 }
 
 std::string NDouble::toJsonStr(){
@@ -17,7 +23,7 @@ std::string NBool::toJsonStr(){
 }
 
 std::string NIdentifier::toJsonStr(){
-    return "{\"type\": \"expression\", \"token\" : \"identifier\", \"value\" : \"" + name + "\"}";
+    return "{\"type\": \"expression\", \"token\" : \"identifier\", \"value\" : \"" + handleQuotes(name) + "\"}";
 }
 
 std::string NMethodCall::toJsonStr(){
@@ -55,9 +61,11 @@ std::string NBlock::toJsonStr(){
 }
 
 std::string NIfStatement::toJsonStr(){
-    return "{\"type\" : \"statement\", \"token\" : \"if\", \"condition\" : " 
+    std::string res = "{\"type\" : \"statement\", \"token\" : \"if\", \"condition\" : " 
         + conditionExpr->toJsonStr() + ", \"ifblock\" : " 
-        + IfBlock->toJsonStr() + ", \"elseblock\" : " + ElseBlock->toJsonStr() + "}";
+        + IfBlock->toJsonStr() + ", \"elseblock\" : ";
+    if (ElseBlock) res += ElseBlock->toJsonStr() + "}";
+    return res;
 }
 
 std::string NBreakStatement::toJsonStr(){
@@ -69,7 +77,9 @@ std::string NContinueStatement::toJsonStr(){
 }
 
 std::string NReturnStatement::toJsonStr(){
-    return "{\"type\" : \"statement\", \"token\" : \"return\", \"returnExpr\" : " + RetExpr->toJsonStr() + "}";
+    if (RetExpr)
+        return "{\"type\" : \"statement\", \"token\" : \"return\", \"returnExpr\" : " + RetExpr->toJsonStr() + "}";
+    return "{\"type\" : \"statement\", \"token\" : \"return\", \"returnExpr\" : {}}";
 }
 
 std::string NWhileStatement::toJsonStr(){
@@ -82,7 +92,7 @@ std::string NExpressionStatement::toJsonStr(){
 }
 
 std::string NVariableDeclaration::toJsonStr(){
-    std::string res = "{\"type\" : \"statement\", \"token\" : \"variableDeclaration\", \"id\" : " + id.toJsonStr() + ", \"type\" : [";
+    std::string res = "{\"type\" : \"statement\", \"token\" : \"variableDeclaration\", \"id\" : " + id.toJsonStr() + ", \"typed\" : [";
     for (int i = 0; i < type.size(); i++) {
         res += type[i]->toJsonStr();
 
@@ -100,7 +110,7 @@ std::string NVariableDeclaration::toJsonStr(){
 
 std::string NFunctionDeclaration::toJsonStr(){
     std::string res = "{\"type\" : \"statement\", \"token\" : \"functionDeclaration\", \"id\" : " + id.toJsonStr() 
-        + ", \"type\" : ["; 
+        + ", \"typed\" : ["; 
     
     for (int i = 0; i < retType->size(); i++) {
         res += retType->at(i)->toJsonStr();

@@ -1,0 +1,15 @@
+{
+    "type" : "expression",
+    "token" : "operator",
+    "op" : 282,
+    "lhs" : {
+        "type" : "expression", 
+        "token" : "integer", 
+        "value" : 10
+    },
+    "rhs" : {
+        "type" : "expression", 
+        "token" : "integer", 
+        "value" : 10
+    }
+}

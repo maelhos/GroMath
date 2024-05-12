@@ -1,0 +1,21 @@
+{
+    "type" : "expression", 
+    "token" : "method", 
+    "id" : {
+        "type" : "expression", 
+        "token" : "identifier", 
+        "value" : "main"
+    }, 
+    "arguments" : [
+        {
+            "type" : "expression", 
+            "token" : "integer", 
+            "value" : 10
+        },
+        {
+            "type" : "expression", 
+            "token" : "integer", 
+            "value" : 21
+        }
+    ]
+}

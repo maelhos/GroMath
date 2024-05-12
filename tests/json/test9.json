@@ -1,0 +1,21 @@
+{
+    "type" : "statement",
+    "token" : "variableDeclaration",
+    "id" : {
+        "type" : "expression",
+        "token" : "identifier",
+        "value" : "x"
+    },
+    "typed" : [
+        {
+            "type" : "expression",
+            "token" : "string",
+            "value" : "int"
+        }
+    ],
+    "expression" : {
+        "type" : "expression",
+        "token" : "integer",
+        "value" : 10
+    }
+}
