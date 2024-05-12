@@ -17,12 +17,23 @@ struct GMLLVM {
     NBlock* entry;
     Env GlobalEnv;
     
+    ////////////
+
     llvm::Function* fn; // current function being processed
     std::unique_ptr<llvm::LLVMContext> ctx;
     std::unique_ptr<llvm::Module> module;
 
     std::unique_ptr<llvm::IRBuilder<>> varsBuilder;
     std::unique_ptr<llvm::IRBuilder<>> builder;
+    
+    std::unique_ptr<llvm::FunctionPassManager> FPM;
+    std::unique_ptr<llvm::LoopAnalysisManager> LAM;
+    std::unique_ptr<llvm::FunctionAnalysisManager> FAM;
+    std::unique_ptr<llvm::CGSCCAnalysisManager> CGAM;
+    std::unique_ptr<llvm::ModuleAnalysisManager> MAM;
+    std::unique_ptr<llvm::PassInstrumentationCallbacks> PIC;
+    std::unique_ptr<llvm::StandardInstrumentations> SI;
+    ////////////
 
     bool isCurentBlockTerminated();
     llvm::BasicBlock* createBB(const std::string& name, llvm::Function* fn = nullptr);

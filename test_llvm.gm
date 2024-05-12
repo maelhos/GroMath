@@ -1,17 +1,18 @@
 
 
-fn fib(n: int) : int {
-    if n == 0:
-        ret 1;
-    else: {
-        if n == 1:
-            ret 1;
-        ret fib(n - 1) + fib(n - 2);
+fn gcd(a: int, b: int) : int {
+    t: int;
+    while b != 0: {
+        t = b;
+        b = a % b;
+        a = t;
     }
+    ret a;
 }
 
 fn main() : int {
-    printf("%d\n", fib(10));
-
+    printf("%d\n", gcd(15, 25));
+    printf("%d\n", gcd(78, 36));
+    printf("%d\n", gcd(65537, 256));
     ret 0;
 }

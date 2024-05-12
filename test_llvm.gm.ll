@@ -3,44 +3,36 @@ source_filename = "GroMathLLVM"
 
 @VERSION = global i32 1, align 4
 @0 = private unnamed_addr constant [4 x i8] c"%d\0A\00", align 1
+@1 = private unnamed_addr constant [4 x i8] c"%d\0A\00", align 1
+@2 = private unnamed_addr constant [4 x i8] c"%d\0A\00", align 1
 
 declare i32 @printf(ptr, ...)
 
-define i32 @fib(i32 %n) {
+define i32 @gcd(i32 %a, i32 %b) {
 entry:
-  %n1 = alloca i32, align 4
-  store i32 %n, ptr %n1, align 4
-  %n2 = load i32, ptr %n1, align 4
-  %tmpcmp = icmp eq i32 %n2, 0
-  br i1 %tmpcmp, label %then, label %else
+  br label %cond
 
-then:                                             ; preds = %entry
-  ret i32 1
+cond:                                             ; preds = %body, %entry
+  %a8 = phi i32 [ %b4, %body ], [ %a, %entry ]
+  %b4 = phi i32 [ %tmprem, %body ], [ %b, %entry ]
+  %tmpcmp.not = icmp eq i32 %b4, 0
+  br i1 %tmpcmp.not, label %loopend, label %body
 
-else:                                             ; preds = %entry
-  %n3 = load i32, ptr %n1, align 4
-  %tmpcmp4 = icmp eq i32 %n3, 1
-  br i1 %tmpcmp4, label %then5, label %ifend
+body:                                             ; preds = %cond
+  %tmprem = srem i32 %a8, %b4
+  br label %cond
 
-then5:                                            ; preds = %else
-  ret i32 1
-
-ifend:                                            ; preds = %else
-  %n6 = load i32, ptr %n1, align 4
-  %tmpsub = sub i32 %n6, 1
-  %0 = call i32 @fib(i32 %tmpsub)
-  %n7 = load i32, ptr %n1, align 4
-  %tmpsub8 = sub i32 %n7, 2
-  %1 = call i32 @fib(i32 %tmpsub8)
-  %tmpadd = add i32 %0, %1
-  ret i32 %tmpadd
-
-ifend9:                                           ; No predecessors!
+loopend:                                          ; preds = %cond
+  ret i32 %a8
 }
 
 define i32 @main() {
 entry:
-  %0 = call i32 @fib(i32 10)
-  %1 = call i32 (ptr, ...) @printf(ptr @0, i32 %0)
+  %0 = call i32 @gcd(i32 15, i32 25)
+  %1 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @0, i32 %0)
+  %2 = call i32 @gcd(i32 78, i32 36)
+  %3 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @1, i32 %2)
+  %4 = call i32 @gcd(i32 65537, i32 256)
+  %5 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @2, i32 %4)
   ret i32 0
 }

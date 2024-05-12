@@ -142,6 +142,28 @@ llvm::Value* NReturnStatement::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NWhileStatement::codeGen(GMLLVM* ctx, Env env){
+    auto condBlock = ctx->createBB("cond", ctx->fn);
+    ctx->builder->CreateBr(condBlock);
+
+    auto bodyBlock = ctx->createBB("body");
+    auto loopEndBlock = ctx->createBB("loopend");
+
+    ctx->builder->SetInsertPoint(condBlock);
+    auto cond = Expr->codeGen(ctx, env);
+    ctx->builder->CreateCondBr(cond, bodyBlock, loopEndBlock);
+
+    ctx->fn->insert(ctx->fn->end(), bodyBlock);
+    ctx->builder->SetInsertPoint(bodyBlock);
+
+    WhileBlock->codeGen(ctx, env);
+    if (!ctx->isCurentBlockTerminated()){
+        auto blk = ctx->builder->GetInsertBlock();
+        ctx->builder->CreateBr(condBlock);
+    }
+                
+    ctx->fn->insert(ctx->fn->end(), loopEndBlock);
+    ctx->builder->SetInsertPoint(loopEndBlock);
+
     return nullptr;
 }
 

@@ -83,9 +83,16 @@ llvm::Value* GMLLVM::compileFunction(NFunctionDeclaration* fnExp, Env env){
     }
     
     fnExp->block.codeGen(this, fnEnv);
+    if (!isCurentBlockTerminated())
+        builder->CreateUnreachable();
+    
 
     builder->SetInsertPoint(prevBlock);
     fn = prevFn;
+
+    // verify and optimise
+    llvm::verifyFunction(*newFn);
+    FPM->run(*newFn, *FAM);
 
     return newFn;
 }
@@ -97,6 +104,32 @@ GMLLVM::GMLLVM(NBlock* entry) : entry(entry) {
 
     builder = std::make_unique<llvm::IRBuilder<>>(*ctx);
     varsBuilder = std::make_unique<llvm::IRBuilder<>>(*ctx);
+
+    FPM  = std::make_unique<llvm::FunctionPassManager>();
+    LAM  = std::make_unique<llvm::LoopAnalysisManager>();
+    FAM  = std::make_unique<llvm::FunctionAnalysisManager>();
+    CGAM = std::make_unique<llvm::CGSCCAnalysisManager>();
+    MAM  = std::make_unique<llvm::ModuleAnalysisManager>();
+    PIC  = std::make_unique<llvm::PassInstrumentationCallbacks>();
+    SI   = std::make_unique<llvm::StandardInstrumentations>(*ctx, true);
+    SI->registerCallbacks(*PIC, MAM.get());
+
+    // Setup passes
+
+    FPM->addPass(llvm::InstCombinePass());
+    // Reassociate expressions.
+    FPM->addPass(llvm::ReassociatePass());
+    // Eliminate Common SubExpressions.
+    FPM->addPass(llvm::GVNPass());
+    // Simplify the control flow graph (deleting unreachable blocks, etc).
+    FPM->addPass(llvm::SimplifyCFGPass());
+    // better ssa
+    FPM->addPass(llvm::PromotePass());
+
+    llvm::PassBuilder PB;
+    PB.registerModuleAnalyses(*MAM);
+    PB.registerFunctionAnalyses(*FAM);
+    PB.crossRegisterProxies(*LAM, *FAM, *CGAM, *MAM);
 
     //setup global env
     std::map<std::string, llvm::Value*> globalObject{
