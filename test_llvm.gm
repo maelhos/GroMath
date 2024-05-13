@@ -1,18 +1,20 @@
 
 
-fn gcd(a: int, b: int) : int {
-    t: int;
-    while b != 0: {
-        t = b;
-        b = a % b;
-        a = t;
-    }
-    ret a;
-}
+
+//fn main() : int {
+//    i: int = 0;
+//    while i < 5: {
+//        printf("%d\n", i);
+//        i = i + 1;
+//    }
+//
+//    ret 0;
+//}
 
 fn main() : int {
-    printf("%d\n", gcd(15, 25));
-    printf("%d\n", gcd(78, 36));
-    printf("%d\n", gcd(65537, 256));
+    for i: int in range(5): {
+        printf("%d\n", i);
+    }
+
     ret 0;
 }

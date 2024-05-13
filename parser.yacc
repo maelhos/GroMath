@@ -46,7 +46,7 @@
 %type <block> program stmts block
 %type <stmt> stmt func_decl if_stmt for_stmt while_stmt ret_stmt break_stmt continue_stmt
 %type <iter> iterator
-%type <var_decl> var_decl
+%type <var_decl> var_decl simple_var_decl
 
 %start program
 
@@ -99,14 +99,14 @@ if_stmt : TIF expr TCOLON block { $$ = new NIfStatement($2, $4); }
                    $$ = new NIfStatement($2, tbl1, tbl2); }
         ;
 
-iterator : TRANGE TLPAREN expr TRPAREN { $$ = new NRangeIterator($3);}
+iterator : TRANGE TLPAREN expr TRPAREN { $$ = new NRangeIterator(0, $3);}
          | TRANGE TLPAREN expr TCOMMA expr TRPAREN { $$ = new NRangeIterator($3, $5);}
          | TRANGE TLPAREN expr TCOMMA expr TCOMMA expr TRPAREN { $$ = new NRangeIterator($3, $5, $7);}
          | TLLBRACK expr TCOMMA expr TRRBRACK { $$ = new NRangeIterator($2, $4, nullptr, true);}
          ;
 
-for_stmt : TFOR var_decl TIN iterator TCOLON block { $$ = new NForStatement($2, $4, $6); }
-         | TFOR var_decl TIN iterator TCOLON stmt 
+for_stmt : TFOR simple_var_decl TIN iterator TCOLON block { $$ = new NForStatement($2, $4, $6); }
+         | TFOR simple_var_decl TIN iterator TCOLON stmt 
                  { auto tbl = new NBlock();
                    tbl->statements.push_back($6);
                    $$ = new NForStatement($2, $4, tbl); }
@@ -137,8 +137,11 @@ type : ident { $$ = new ExpressionList(); $$->push_back($1); }
      | type TRARROW ident { $$->push_back($3); }
      ;
 
-var_decl : ident TCOLON type { $$ = new NVariableDeclaration(*$3, *$1); }
-         | ident TCOLON type TEQUAL expr { $$ = new NVariableDeclaration(*$3, *$1, $5); }
+simple_var_decl : ident TCOLON type { $$ = new NVariableDeclaration(*$3, *$1); }
+                ;
+
+var_decl : ident TCOLON type TEQUAL expr { $$ = new NVariableDeclaration(*$3, *$1, $5); }
+         | simple_var_decl
          ;
         
 func_decl : TFN ident TLPAREN func_decl_args TRPAREN TCOLON type block 

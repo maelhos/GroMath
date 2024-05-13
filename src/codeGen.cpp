@@ -197,5 +197,68 @@ llvm::Value* NRangeIterator::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NForStatement::codeGen(GMLLVM* ctx, Env env){
+    auto forEnv = std::make_shared<Environement>(
+        std::map<std::string, llvm::Value*>{}, env);
+
+    auto varTy = ctx->extractVarType(&VarDecl->type);
+    auto varFor = ctx->allocVar(VarDecl->id.name, varTy, env);
+    auto varForBind = llvm::dyn_cast<llvm::AllocaInst>(varFor);
+
+    llvm::Value* incrFor;
+    llvm::Value* stopFor;
+    bool iter_inclusive = false;
+    // init for variable
+
+    // simple range iterator
+    if (auto iter_s = dynamic_cast<NRangeIterator*>(Iter)){
+        if (iter_s->start)
+            ctx->builder->CreateStore(iter_s->start->codeGen(ctx, forEnv), varFor);
+        else
+            ctx->builder->CreateStore(ctx->builder->getInt32(0), varFor);
+
+        if (iter_s->incr) incrFor = iter_s->incr->codeGen(ctx, forEnv);
+        else incrFor = ctx->builder->getInt32(1);
+
+        stopFor = iter_s->stop->codeGen(ctx, forEnv);
+        iter_inclusive = iter_s->endInclusive;
+    }
+    else return nullptr;
+
+    auto condBlock = ctx->createBB("cond", ctx->fn);
+    ctx->builder->CreateBr(condBlock);
+
+    auto bodyBlock = ctx->createBB("body");
+    auto loopEndBlock = ctx->createBB("loopend");
+
+    ctx->builder->SetInsertPoint(condBlock);
+
+    llvm::Value* cond;
+    if (iter_inclusive)
+        cond = ctx->builder->CreateICmpSLE(
+            ctx->builder->CreateLoad(varForBind->getAllocatedType(), varForBind), 
+            stopFor);
+    else
+        cond = ctx->builder->CreateICmpSLT(
+            ctx->builder->CreateLoad(varForBind->getAllocatedType(), varForBind), 
+            stopFor);
+
+    ctx->builder->CreateCondBr(cond, bodyBlock, loopEndBlock);
+
+    ctx->fn->insert(ctx->fn->end(), bodyBlock);
+    ctx->builder->SetInsertPoint(bodyBlock);
+
+    ForBlock->codeGen(ctx, env);
+    ctx->builder->CreateStore(ctx->builder->CreateAdd(
+        ctx->builder->CreateLoad(varForBind->getAllocatedType(), varForBind),  
+        incrFor), 
+        varForBind);
+
+    if (!ctx->isCurentBlockTerminated()){
+        auto blk = ctx->builder->GetInsertBlock();
+        ctx->builder->CreateBr(condBlock);
+    }
+                
+    ctx->fn->insert(ctx->fn->end(), loopEndBlock);
+    ctx->builder->SetInsertPoint(loopEndBlock);
     return nullptr;
 }

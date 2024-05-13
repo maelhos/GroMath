@@ -25,9 +25,9 @@ llvm::Value* GMLLVM::resolveOperatorInt(int tok, llvm::Value* lhs, llvm::Value* 
     case TCNE:
         GEN_BINARY_OP(CreateICmpNE, "tmpcmp");
     case TCLE:
-        GEN_BINARY_OP(CreateICmpSGE, "tmpcmp");
+        GEN_BINARY_OP(CreateICmpSLE, "tmpcmp");
     case TCGE:
-        GEN_BINARY_OP(CreateICmpSLE, "tmpcmp");    
+        GEN_BINARY_OP(CreateICmpSGE, "tmpcmp");    
     default:
         printf("Unkwnon token \"%d\" as binop for integer !\n", tok);
         exit(1);
