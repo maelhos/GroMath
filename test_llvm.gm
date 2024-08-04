@@ -1,6 +1,4 @@
 
-
-
 fn main() : int {
     a: int = 0;
     for i: int in range(0, 1000000): {

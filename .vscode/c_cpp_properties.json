@@ -16,6 +16,7 @@
             "intelliSenseMode": "linux-gcc-x64",
             "compilerArgs": [
                 "-I/usr/lib/llvm-19/include ",
+                "-I/usr/local/include/NTL",
                 "-std=c++17   ",
                 "-fno-exceptions ",
                 "-funwind-tables ",
@@ -24,6 +25,7 @@
                 "-D__STDC_FORMAT_MACROS ",
                 "-D__STDC_LIMIT_MACROS",
                 "-L/usr/lib/llvm-19/lib ",
+                "-lntl",
                 "-lLLVMCore ",
                 "-lLLVMRemarks ",
                 "-lLLVMBitstreamReader ",
