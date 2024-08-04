@@ -6,6 +6,9 @@ llvm::Type* GMLLVM::convertType(NIdentifier* ident){
     if (name == "int")
         return builder->getInt32Ty();
     
+    if (name == "ZZ")
+        return builder->getPtrTy();
+    
     printf("Unknown type \"%s\"...\n", name.c_str());
     exit(1);
 }

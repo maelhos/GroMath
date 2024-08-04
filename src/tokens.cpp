@@ -366,11 +366,11 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[89] =
     {   0,
-        0,    0,   46,   44,    1,    1,   44,   44,   42,   26,
-       27,   40,   38,   37,   39,   34,   41,   17,   35,   36,
-       22,   19,   24,   16,   30,   31,   43,   16,   16,   16,
-       16,   16,   16,   16,   16,   28,   29,   21,    0,   18,
-        0,   15,    2,   17,   23,   20,   25,   16,   32,   33,
+        0,    0,   46,   44,    1,    1,   44,   44,   36,   42,
+       43,   34,   32,   31,   33,   28,   35,   17,   29,   30,
+       22,   19,   24,   16,   38,   39,   37,   16,   16,   16,
+       16,   16,   16,   16,   16,   26,   27,   21,    0,   18,
+        0,   15,    2,   17,   23,   20,   25,   16,   40,   41,
        16,   16,   16,   16,    5,   16,    3,    8,   16,   16,
        16,   16,    2,   16,   16,   16,   16,    7,   16,    9,
        16,   16,   16,   16,    4,   16,   16,   13,   16,   10,
@@ -511,9 +511,8 @@ char *yytext;
 #define SAVE_TOKEN yylval.string = new std::string(yytext, yyleng)
 
 #define TOKEN(t) (yylval.token = t)
-//extern "C" int yywrap() {return 0; }
+#line 515 "src/tokens.cpp"
 #line 516 "src/tokens.cpp"
-#line 517 "src/tokens.cpp"
 
 #define INITIAL 0
 
@@ -730,10 +729,10 @@ YY_DECL
 		}
 
 	{
-#line 14 "tokens.l"
+#line 13 "tokens.l"
 
 
-#line 737 "src/tokens.cpp"
+#line 736 "src/tokens.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -793,231 +792,231 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 16 "tokens.l"
+#line 15 "tokens.l"
 ;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 17 "tokens.l"
+#line 16 "tokens.l"
 ;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 19 "tokens.l"
+#line 18 "tokens.l"
 return TOKEN(TIF);
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 20 "tokens.l"
+#line 19 "tokens.l"
 return TOKEN(TELSE);
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 21 "tokens.l"
+#line 20 "tokens.l"
 return TOKEN(TFN);
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 22 "tokens.l"
+#line 21 "tokens.l"
 return TOKEN(TWHILE);
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 23 "tokens.l"
+#line 22 "tokens.l"
 return TOKEN(TFOR);
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 24 "tokens.l"
+#line 23 "tokens.l"
 return TOKEN(TIN);
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 25 "tokens.l"
+#line 24 "tokens.l"
 return TOKEN(TRET);
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 26 "tokens.l"
+#line 25 "tokens.l"
 return TOKEN(TBREAK);
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 27 "tokens.l"
+#line 26 "tokens.l"
 return TOKEN(TCONTINUE);
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 28 "tokens.l"
+#line 27 "tokens.l"
 return TOKEN(TRANGE);
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 30 "tokens.l"
+#line 29 "tokens.l"
 return TOKEN(TTRUE);
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 31 "tokens.l"
+#line 30 "tokens.l"
 return TOKEN(TFALSE);
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 33 "tokens.l"
+#line 32 "tokens.l"
 return TOKEN(TRARROW);
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 35 "tokens.l"
+#line 34 "tokens.l"
 SAVE_TOKEN; return TIDENTIFIER;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 36 "tokens.l"
+#line 35 "tokens.l"
 SAVE_TOKEN; return TINTEGER;
 	YY_BREAK
 case 18:
 /* rule 18 can match eol */
 YY_RULE_SETUP
-#line 37 "tokens.l"
+#line 36 "tokens.l"
 SAVE_TOKEN; return TCSTSTRING;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 39 "tokens.l"
+#line 38 "tokens.l"
 return TOKEN(TEQUAL);
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 41 "tokens.l"
+#line 40 "tokens.l"
 return TOKEN(TCEQ);
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 42 "tokens.l"
+#line 41 "tokens.l"
 return TOKEN(TCNE);
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 43 "tokens.l"
+#line 42 "tokens.l"
 return TOKEN(TCLT);
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 44 "tokens.l"
+#line 43 "tokens.l"
 return TOKEN(TCLE);
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 45 "tokens.l"
+#line 44 "tokens.l"
 return TOKEN(TCGT);
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 46 "tokens.l"
+#line 45 "tokens.l"
 return TOKEN(TCGE);
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 48 "tokens.l"
-return TOKEN(TLPAREN);
+#line 47 "tokens.l"
+return TOKEN(TLBRACE);
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 49 "tokens.l"
-return TOKEN(TRPAREN);
+#line 48 "tokens.l"
+return TOKEN(TRBRACE);
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 50 "tokens.l"
-return TOKEN(TLBRACE);
+return TOKEN(TDOT);
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 51 "tokens.l"
-return TOKEN(TRBRACE);
+return TOKEN(TCOLON);
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 52 "tokens.l"
-return TOKEN(TLBRACK);
+return TOKEN(TSCOLON);
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 53 "tokens.l"
-return TOKEN(TRBRACK);
+return TOKEN(TCOMMA);
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 54 "tokens.l"
-return TOKEN(TLLBRACK);
+#line 55 "tokens.l"
+return TOKEN(TPLUS);
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 55 "tokens.l"
-return TOKEN(TRRBRACK);
+#line 56 "tokens.l"
+return TOKEN(TMINUS);
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 57 "tokens.l"
-return TOKEN(TDOT);
+return TOKEN(TMUL);
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 58 "tokens.l"
-return TOKEN(TCOLON);
+return TOKEN(TDIV);
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 59 "tokens.l"
-return TOKEN(TSCOLON);
+return TOKEN(TMOD);
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 60 "tokens.l"
-return TOKEN(TCOMMA);
+#line 61 "tokens.l"
+return TOKEN(TPOW);
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 62 "tokens.l"
-return TOKEN(TPLUS);
+#line 63 "tokens.l"
+return TOKEN(TLBRACK);
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 63 "tokens.l"
-return TOKEN(TMINUS);
+#line 64 "tokens.l"
+return TOKEN(TRBRACK);
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 64 "tokens.l"
-return TOKEN(TMUL);
+#line 65 "tokens.l"
+return TOKEN(TLLBRACK);
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 65 "tokens.l"
-return TOKEN(TDIV);
+#line 66 "tokens.l"
+return TOKEN(TRRBRACK);
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 66 "tokens.l"
-return TOKEN(TMOD);
+#line 68 "tokens.l"
+return TOKEN(TLPAREN);
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 67 "tokens.l"
-return TOKEN(TPOW);
+#line 69 "tokens.l"
+return TOKEN(TRPAREN);
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 69 "tokens.l"
+#line 71 "tokens.l"
 printf("Unknown tokenn !"); yyterminate();
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 71 "tokens.l"
+#line 73 "tokens.l"
 ECHO;
 	YY_BREAK
-#line 1021 "src/tokens.cpp"
+#line 1020 "src/tokens.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2022,5 +2021,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 71 "tokens.l"
+#line 73 "tokens.l"
 

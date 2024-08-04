@@ -92,7 +92,7 @@ llvm::Value* GMLLVM::compileFunction(NFunctionDeclaration* fnExp, Env env){
 
     // verify and optimise
     llvm::verifyFunction(*newFn);
-    //FPM->run(*newFn, *FAM); // DISABLED FOR TESTS
+    FPM->run(*newFn, *FAM); // DISABLED FOR TESTS
 
     return newFn;
 }

@@ -6,7 +6,6 @@
 #define SAVE_TOKEN yylval.string = new std::string(yytext, yyleng)
 
 #define TOKEN(t) (yylval.token = t)
-//extern "C" int yywrap() {return 0; }
 %}
 
 %option noyywrap
@@ -45,14 +44,8 @@
 ">"                     return TOKEN(TCGT);
 ">="                    return TOKEN(TCGE);
 
-"("                     return TOKEN(TLPAREN);
-")"                     return TOKEN(TRPAREN);
 "{"                     return TOKEN(TLBRACE);
 "}"                     return TOKEN(TRBRACE);
-"["                     return TOKEN(TLBRACK);
-"]"                     return TOKEN(TRBRACK);
-"[["                    return TOKEN(TLLBRACK);
-"]]"                    return TOKEN(TRRBRACK);
 
 "."                     return TOKEN(TDOT);
 ":"                     return TOKEN(TCOLON);
@@ -64,7 +57,16 @@
 "*"                     return TOKEN(TMUL);
 "/"                     return TOKEN(TDIV);
 "%"                     return TOKEN(TMOD);
+
 "^"                     return TOKEN(TPOW);
+
+"["                     return TOKEN(TLBRACK);
+"]"                     return TOKEN(TRBRACK);
+"[["                    return TOKEN(TLLBRACK);
+"]]"                    return TOKEN(TRRBRACK);
+
+"("                     return TOKEN(TLPAREN);
+")"                     return TOKEN(TRPAREN);
 
 .                       printf("Unknown tokenn !"); yyterminate();
 

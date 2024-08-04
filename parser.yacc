@@ -51,11 +51,13 @@
 %start program
 
 /* Operator precedence for mathematical operators */
+
 %left TCEQ TCNE TCLT TCLE TCGT TCGE 
-%left TMOD
 %left TPLUS TMINUS
-%left TMUL TDIV
+%left TMUL TDIV TMOD
 %right TPOW 
+%left TLBRACK TRBRACK TLLBRACK TRRBRACK
+%left TLPAREN TRPAREN
 
 %%
 

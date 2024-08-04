@@ -9,3 +9,4 @@
 #include <memory>
 #include <vector>
 #include <stdlib.h>
+#include <NTL/ALL_FEATURES.h>

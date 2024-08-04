@@ -1,20 +1,11 @@
 
 
 
-//fn main() : int {
-//    i: int = 0;
-//    while i < 5: {
-//        printf("%d\n", i);
-//        i = i + 1;
-//    }
-//
-//    ret 0;
-//}
-
 fn main() : int {
-    for i: int in range(5): {
-        printf("%d\n", i);
+    a: int = 0;
+    for i: int in range(0, 1000000): {
+        a = (65537 * a) % 512 + i;
     }
-
+    printf("%d\n", a);
     ret 0;
 }

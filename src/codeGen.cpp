@@ -1,11 +1,14 @@
 #include "node.h"
 #include "GMcompiler.h"
 #include "utils.h"
+#include <NTL/ZZ.h>
 
 llvm::Value* NIntConstant::codeGen(GMLLVM* ctx, Env env){
     // must be tune for later TODO: biginted... 
+    // return smallest int type with smallest being 32 bit then 64 bit then ZZ
+    NTL::ZZ val2; 
+    sizeof(NTL::ZZ);
     int32_t val = strtol(value.c_str(), 0, 10);
-
     return ctx->builder->getInt32(val);;
 }
 
@@ -24,7 +27,7 @@ llvm::Value* NBool::codeGen(GMLLVM* ctx, Env env){
 }
 
 llvm::Value* NIdentifier::codeGen(GMLLVM* ctx, Env env){
-    printf("NIdentifier : \"%s\" \n", name.c_str());
+    // printf("NIdentifier : \"%s\" \n", name.c_str());
     auto value = env->lookup(name);
                 
     // local vars

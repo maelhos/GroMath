@@ -559,13 +559,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    62,    62,    65,    66,    69,    70,    71,    72,    73,
-      74,    75,    76,    77,    80,    81,    85,    86,    90,    94,
-     102,   103,   104,   105,   108,   109,   115,   116,   122,   125,
-     128,   129,   132,   133,   136,   137,   140,   143,   144,   147,
-     151,   152,   153,   156,   159,   162,   166,   167,   168,   169,
-     170,   171,   172,   173,   174,   177,   178,   179,   182,   183,
-     184,   185,   186,   187,   188,   189,   190,   191,   192,   193
+       0,    64,    64,    67,    68,    71,    72,    73,    74,    75,
+      76,    77,    78,    79,    82,    83,    87,    88,    92,    96,
+     104,   105,   106,   107,   110,   111,   117,   118,   124,   127,
+     130,   131,   134,   135,   138,   139,   142,   145,   146,   149,
+     153,   154,   155,   158,   161,   164,   168,   169,   170,   171,
+     172,   173,   174,   175,   176,   179,   180,   181,   184,   185,
+     186,   187,   188,   189,   190,   191,   192,   193,   194,   195
 };
 #endif
 
@@ -623,9 +623,9 @@ static const yytype_int16 yypact[] =
       65,    65,    65,    65,   -61,    65,    65,    65,    65,    65,
       65,   -61,   125,    15,   125,   -14,    15,   374,   374,    -8,
      -12,   -61,     5,     5,     5,     5,     5,     5,    33,    33,
-      32,    32,    55,    32,   141,    42,    45,   -61,    -7,    56,
-     -61,   -61,    65,    73,    64,    47,   -61,    65,    65,    15,
-     -61,   180,    68,    69,    72,    15,   317,    65,   125,   374,
+      44,    44,    44,    44,   141,    45,    47,   -61,    -7,    57,
+     -61,   -61,    65,    68,    59,    42,   -61,    65,    65,    15,
+     -61,   180,    62,    63,    64,    15,   317,    65,   125,   374,
      374,   -61,   -61,   125,   125,    15,   -61,    65,   214,   -61,
      -61,   -61,   -61,   -61,   -61,   -13,   342,   -61,    65,   -61,
      -61,   239,   -61,    65,   349,   -61
@@ -655,8 +655,8 @@ static const yytype_int8 yydefact[] =
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -61,   -61,    14,    -5,   -61,   -61,   -61,   -61,   -61,   -61,
-     -61,   -47,   -60,    89,   -49,   -61,   -61,    11,   -61,   -61,
+     -61,   -61,     6,    -5,   -61,   -61,   -61,   -61,   -61,   -61,
+     -61,   -47,   -60,    83,   -49,   -61,   -61,    11,   -61,   -61,
       -6,   -61,   -61
 };
 
@@ -679,10 +679,10 @@ static const yytype_uint8 yytable[] =
       99,    99,    55,    56,    57,    58,    59,    60,    44,    67,
       68,    63,    72,    73,    74,    75,    76,    77,    66,    78,
       79,    80,    81,    82,    83,   125,   116,    85,    71,    90,
-      65,   120,    57,    58,    60,    60,   122,   124,     1,     2,
-       3,     4,     5,    26,    89,    26,   102,    71,   129,   103,
-       6,    47,    55,    56,    57,    58,   106,    60,   107,   108,
-      99,   109,   110,   113,   114,    26,    40,   115,   101,    36,
+      65,   120,    57,    58,    59,    60,   122,   124,     1,     2,
+       3,     4,     5,    26,    89,    26,    60,    71,   129,   102,
+       6,   103,    47,   107,   108,    99,   106,   113,   114,   115,
+     101,   109,   110,    36,     0,    26,    40,     0,     0,     0,
        0,   118,     0,   119,     0,     0,     0,     0,   121,   123,
      111,   126,    26,     0,     0,     0,    89,     0,     0,    26,
        0,     0,   131,     0,    26,    26,    71,   134,     1,     2,
@@ -724,10 +724,10 @@ static const yytype_int16 yycheck[] =
       43,    43,    27,    28,    29,    30,    31,    32,    26,    45,
       46,    15,    48,    49,    50,    51,    52,    53,    25,    55,
       56,    57,    58,    59,    60,   115,   105,    62,    47,    64,
-      38,   108,    29,    30,    32,    32,   113,   114,     3,     4,
-       5,     6,     7,    62,    63,    64,    34,    66,   125,    34,
-      15,    25,    27,    28,    29,    30,    92,    32,    15,    25,
-      43,    97,    98,    25,    25,    84,   101,    25,    84,    10,
+      38,   108,    29,    30,    31,    32,   113,   114,     3,     4,
+       5,     6,     7,    62,    63,    64,    32,    66,   125,    34,
+      15,    34,    25,    15,    25,    43,    92,    25,    25,    25,
+      84,    97,    98,    10,    -1,    84,   101,    -1,    -1,    -1,
       -1,   107,    -1,   108,    -1,    -1,    -1,    -1,   113,   114,
       99,   117,   101,    -1,    -1,    -1,   105,    -1,    -1,   108,
       -1,    -1,   128,    -1,   113,   114,   115,   133,     3,     4,
@@ -1266,43 +1266,43 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: stmts  */
-#line 62 "parser.yacc"
+#line 64 "parser.yacc"
                 { programBlock = (yyvsp[0].block); }
 #line 1272 "src/parser.cpp"
     break;
 
   case 3: /* stmts: stmt  */
-#line 65 "parser.yacc"
+#line 67 "parser.yacc"
              { (yyval.block) = new NBlock(); (yyval.block)->statements.push_back((yyvsp[0].stmt)); }
 #line 1278 "src/parser.cpp"
     break;
 
   case 4: /* stmts: stmts stmt  */
-#line 66 "parser.yacc"
+#line 68 "parser.yacc"
                    { (yyvsp[-1].block)->statements.push_back((yyvsp[0].stmt)); }
 #line 1284 "src/parser.cpp"
     break;
 
   case 5: /* stmt: var_decl TSCOLON  */
-#line 69 "parser.yacc"
+#line 71 "parser.yacc"
                         { (yyval.stmt) = (NStatement*)(yyvsp[-1].var_decl); }
 #line 1290 "src/parser.cpp"
     break;
 
   case 7: /* stmt: expr TSCOLON  */
-#line 71 "parser.yacc"
+#line 73 "parser.yacc"
                     { (yyval.stmt) = new NExpressionStatement(*(yyvsp[-1].expr)); }
 #line 1296 "src/parser.cpp"
     break;
 
   case 14: /* if_stmt: TIF expr TCOLON block  */
-#line 80 "parser.yacc"
+#line 82 "parser.yacc"
                                 { (yyval.stmt) = new NIfStatement((yyvsp[-2].expr), (yyvsp[0].block)); }
 #line 1302 "src/parser.cpp"
     break;
 
   case 15: /* if_stmt: TIF expr TCOLON stmt  */
-#line 82 "parser.yacc"
+#line 84 "parser.yacc"
             { auto tbl = new NBlock();
                    tbl->statements.push_back((yyvsp[0].stmt));
                    (yyval.stmt) = new NIfStatement((yyvsp[-2].expr), tbl); }
@@ -1310,13 +1310,13 @@ yyreduce:
     break;
 
   case 16: /* if_stmt: TIF expr TCOLON block TELSE TCOLON block  */
-#line 85 "parser.yacc"
+#line 87 "parser.yacc"
                                                    { (yyval.stmt) = new NIfStatement((yyvsp[-5].expr), (yyvsp[-3].block), (yyvsp[0].block)); }
 #line 1316 "src/parser.cpp"
     break;
 
   case 17: /* if_stmt: TIF expr TCOLON stmt TELSE TCOLON block  */
-#line 87 "parser.yacc"
+#line 89 "parser.yacc"
             { auto tbl = new NBlock();
                    tbl->statements.push_back((yyvsp[-3].stmt));
                    (yyval.stmt) = new NIfStatement((yyvsp[-5].expr), tbl, (yyvsp[0].block)); }
@@ -1324,7 +1324,7 @@ yyreduce:
     break;
 
   case 18: /* if_stmt: TIF expr TCOLON block TELSE TCOLON stmt  */
-#line 91 "parser.yacc"
+#line 93 "parser.yacc"
             { auto tbl = new NBlock();
                    tbl->statements.push_back((yyvsp[0].stmt));
                    (yyval.stmt) = new NIfStatement((yyvsp[-5].expr), (yyvsp[-3].block), tbl); }
@@ -1332,7 +1332,7 @@ yyreduce:
     break;
 
   case 19: /* if_stmt: TIF expr TCOLON stmt TELSE TCOLON stmt  */
-#line 95 "parser.yacc"
+#line 97 "parser.yacc"
             { auto tbl1 = new NBlock();
                    tbl1->statements.push_back((yyvsp[-3].stmt));
                    auto tbl2 = new NBlock();
@@ -1342,37 +1342,37 @@ yyreduce:
     break;
 
   case 20: /* iterator: TRANGE TLPAREN expr TRPAREN  */
-#line 102 "parser.yacc"
+#line 104 "parser.yacc"
                                        { (yyval.iter) = new NRangeIterator(0, (yyvsp[-1].expr));}
 #line 1348 "src/parser.cpp"
     break;
 
   case 21: /* iterator: TRANGE TLPAREN expr TCOMMA expr TRPAREN  */
-#line 103 "parser.yacc"
+#line 105 "parser.yacc"
                                                    { (yyval.iter) = new NRangeIterator((yyvsp[-3].expr), (yyvsp[-1].expr));}
 #line 1354 "src/parser.cpp"
     break;
 
   case 22: /* iterator: TRANGE TLPAREN expr TCOMMA expr TCOMMA expr TRPAREN  */
-#line 104 "parser.yacc"
+#line 106 "parser.yacc"
                                                                { (yyval.iter) = new NRangeIterator((yyvsp[-5].expr), (yyvsp[-3].expr), (yyvsp[-1].expr));}
 #line 1360 "src/parser.cpp"
     break;
 
   case 23: /* iterator: TLLBRACK expr TCOMMA expr TRRBRACK  */
-#line 105 "parser.yacc"
+#line 107 "parser.yacc"
                                               { (yyval.iter) = new NRangeIterator((yyvsp[-3].expr), (yyvsp[-1].expr), nullptr, true);}
 #line 1366 "src/parser.cpp"
     break;
 
   case 24: /* for_stmt: TFOR simple_var_decl TIN iterator TCOLON block  */
-#line 108 "parser.yacc"
+#line 110 "parser.yacc"
                                                           { (yyval.stmt) = new NForStatement((yyvsp[-4].var_decl), (yyvsp[-2].iter), (yyvsp[0].block)); }
 #line 1372 "src/parser.cpp"
     break;
 
   case 25: /* for_stmt: TFOR simple_var_decl TIN iterator TCOLON stmt  */
-#line 110 "parser.yacc"
+#line 112 "parser.yacc"
                  { auto tbl = new NBlock();
                    tbl->statements.push_back((yyvsp[0].stmt));
                    (yyval.stmt) = new NForStatement((yyvsp[-4].var_decl), (yyvsp[-2].iter), tbl); }
@@ -1380,13 +1380,13 @@ yyreduce:
     break;
 
   case 26: /* while_stmt: TWHILE expr TCOLON block  */
-#line 115 "parser.yacc"
+#line 117 "parser.yacc"
                                       { (yyval.stmt) = new NWhileStatement((yyvsp[-2].expr), (yyvsp[0].block)); }
 #line 1386 "src/parser.cpp"
     break;
 
   case 27: /* while_stmt: TWHILE expr TCOLON stmt  */
-#line 117 "parser.yacc"
+#line 119 "parser.yacc"
                 { auto tbl = new NBlock();
                   tbl->statements.push_back((yyvsp[0].stmt));
                   (yyval.stmt) = new NWhileStatement((yyvsp[-2].expr), tbl); }
@@ -1394,229 +1394,229 @@ yyreduce:
     break;
 
   case 28: /* break_stmt: TBREAK  */
-#line 122 "parser.yacc"
+#line 124 "parser.yacc"
                     {(yyval.stmt) = new NBreakStatement();}
 #line 1400 "src/parser.cpp"
     break;
 
   case 29: /* continue_stmt: TCONTINUE  */
-#line 125 "parser.yacc"
+#line 127 "parser.yacc"
                           {(yyval.stmt) = new NContinueStatement();}
 #line 1406 "src/parser.cpp"
     break;
 
   case 30: /* ret_stmt: TRET  */
-#line 128 "parser.yacc"
+#line 130 "parser.yacc"
                 {(yyval.stmt) = new NReturnStatement();}
 #line 1412 "src/parser.cpp"
     break;
 
   case 31: /* ret_stmt: TRET expr  */
-#line 129 "parser.yacc"
+#line 131 "parser.yacc"
                      {(yyval.stmt) = new NReturnStatement((yyvsp[0].expr));}
 #line 1418 "src/parser.cpp"
     break;
 
   case 32: /* block: TLBRACE stmts TRBRACE  */
-#line 132 "parser.yacc"
+#line 134 "parser.yacc"
                               { (yyval.block) = (yyvsp[-1].block); }
 #line 1424 "src/parser.cpp"
     break;
 
   case 33: /* block: TLBRACE TRBRACE  */
-#line 133 "parser.yacc"
+#line 135 "parser.yacc"
                         { (yyval.block) = new NBlock(); }
 #line 1430 "src/parser.cpp"
     break;
 
   case 34: /* type: ident  */
-#line 136 "parser.yacc"
+#line 138 "parser.yacc"
              { (yyval.exprvec) = new ExpressionList(); (yyval.exprvec)->push_back((yyvsp[0].ident)); }
 #line 1436 "src/parser.cpp"
     break;
 
   case 35: /* type: type TRARROW ident  */
-#line 137 "parser.yacc"
+#line 139 "parser.yacc"
                           { (yyval.exprvec)->push_back((yyvsp[0].ident)); }
 #line 1442 "src/parser.cpp"
     break;
 
   case 36: /* simple_var_decl: ident TCOLON type  */
-#line 140 "parser.yacc"
+#line 142 "parser.yacc"
                                     { (yyval.var_decl) = new NVariableDeclaration(*(yyvsp[0].exprvec), *(yyvsp[-2].ident)); }
 #line 1448 "src/parser.cpp"
     break;
 
   case 37: /* var_decl: ident TCOLON type TEQUAL expr  */
-#line 143 "parser.yacc"
+#line 145 "parser.yacc"
                                          { (yyval.var_decl) = new NVariableDeclaration(*(yyvsp[-2].exprvec), *(yyvsp[-4].ident), (yyvsp[0].expr)); }
 #line 1454 "src/parser.cpp"
     break;
 
   case 39: /* func_decl: TFN ident TLPAREN func_decl_args TRPAREN TCOLON type block  */
-#line 148 "parser.yacc"
+#line 150 "parser.yacc"
             { (yyval.stmt) = new NFunctionDeclaration((yyvsp[-1].exprvec), *(yyvsp[-6].ident), *(yyvsp[-4].varvec), *(yyvsp[0].block)); delete (yyvsp[-4].varvec); }
 #line 1460 "src/parser.cpp"
     break;
 
   case 40: /* func_decl_args: %empty  */
-#line 151 "parser.yacc"
+#line 153 "parser.yacc"
                             { (yyval.varvec) = new VariableList(); }
 #line 1466 "src/parser.cpp"
     break;
 
   case 41: /* func_decl_args: var_decl  */
-#line 152 "parser.yacc"
+#line 154 "parser.yacc"
                      { (yyval.varvec) = new VariableList(); (yyval.varvec)->push_back((yyvsp[0].var_decl)); }
 #line 1472 "src/parser.cpp"
     break;
 
   case 42: /* func_decl_args: func_decl_args TCOMMA var_decl  */
-#line 153 "parser.yacc"
+#line 155 "parser.yacc"
                                            { (yyvsp[-2].varvec)->push_back((yyvsp[0].var_decl)); }
 #line 1478 "src/parser.cpp"
     break;
 
   case 43: /* ident: TIDENTIFIER  */
-#line 156 "parser.yacc"
+#line 158 "parser.yacc"
                     { (yyval.ident) = new NIdentifier(*(yyvsp[0].string)); delete (yyvsp[0].string); }
 #line 1484 "src/parser.cpp"
     break;
 
   case 44: /* cst_string: TCSTSTRING  */
-#line 159 "parser.yacc"
+#line 161 "parser.yacc"
                         { (yyval.expr) = new NSringConstant(*(yyvsp[0].string)); delete (yyvsp[0].string); }
 #line 1490 "src/parser.cpp"
     break;
 
   case 45: /* cst_int: TINTEGER  */
-#line 162 "parser.yacc"
+#line 164 "parser.yacc"
                    { (yyval.expr) = new NIntConstant(*(yyvsp[0].string)); delete (yyvsp[0].string); }
 #line 1496 "src/parser.cpp"
     break;
 
   case 46: /* expr: ident TEQUAL expr  */
-#line 166 "parser.yacc"
+#line 168 "parser.yacc"
                          { (yyval.expr) = new NAssignment(*(yyvsp[-2].ident), *(yyvsp[0].expr)); }
 #line 1502 "src/parser.cpp"
     break;
 
   case 47: /* expr: ident TLPAREN call_args TRPAREN  */
-#line 167 "parser.yacc"
+#line 169 "parser.yacc"
                                        { (yyval.expr) = new NMethodCall(*(yyvsp[-3].ident), *(yyvsp[-1].exprvec)); delete (yyvsp[-1].exprvec); }
 #line 1508 "src/parser.cpp"
     break;
 
   case 48: /* expr: ident  */
-#line 168 "parser.yacc"
+#line 170 "parser.yacc"
              { (yyval.expr) = (yyvsp[0].ident); }
 #line 1514 "src/parser.cpp"
     break;
 
   case 52: /* expr: TLPAREN expr TRPAREN  */
-#line 172 "parser.yacc"
+#line 174 "parser.yacc"
                             { (yyval.expr) = (yyvsp[-1].expr); }
 #line 1520 "src/parser.cpp"
     break;
 
   case 53: /* expr: TTRUE  */
-#line 173 "parser.yacc"
+#line 175 "parser.yacc"
              { (yyval.expr) = new NBool(true); }
 #line 1526 "src/parser.cpp"
     break;
 
   case 54: /* expr: TFALSE  */
-#line 174 "parser.yacc"
+#line 176 "parser.yacc"
               { (yyval.expr) = new NBool(false); }
 #line 1532 "src/parser.cpp"
     break;
 
   case 55: /* call_args: %empty  */
-#line 177 "parser.yacc"
+#line 179 "parser.yacc"
             { (yyval.exprvec) = new ExpressionList(); }
 #line 1538 "src/parser.cpp"
     break;
 
   case 56: /* call_args: expr  */
-#line 178 "parser.yacc"
+#line 180 "parser.yacc"
                  { (yyval.exprvec) = new ExpressionList(); (yyval.exprvec)->push_back((yyvsp[0].expr)); }
 #line 1544 "src/parser.cpp"
     break;
 
   case 57: /* call_args: call_args TCOMMA expr  */
-#line 179 "parser.yacc"
+#line 181 "parser.yacc"
                                    { (yyvsp[-2].exprvec)->push_back((yyvsp[0].expr)); }
 #line 1550 "src/parser.cpp"
     break;
 
   case 58: /* binop: expr TCEQ expr  */
-#line 182 "parser.yacc"
+#line 184 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1556 "src/parser.cpp"
     break;
 
   case 59: /* binop: expr TCNE expr  */
-#line 183 "parser.yacc"
+#line 185 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1562 "src/parser.cpp"
     break;
 
   case 60: /* binop: expr TCLT expr  */
-#line 184 "parser.yacc"
+#line 186 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1568 "src/parser.cpp"
     break;
 
   case 61: /* binop: expr TCLE expr  */
-#line 185 "parser.yacc"
+#line 187 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1574 "src/parser.cpp"
     break;
 
   case 62: /* binop: expr TCGT expr  */
-#line 186 "parser.yacc"
+#line 188 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1580 "src/parser.cpp"
     break;
 
   case 63: /* binop: expr TCGE expr  */
-#line 187 "parser.yacc"
+#line 189 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1586 "src/parser.cpp"
     break;
 
   case 64: /* binop: expr TPLUS expr  */
-#line 188 "parser.yacc"
+#line 190 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1592 "src/parser.cpp"
     break;
 
   case 65: /* binop: expr TMINUS expr  */
-#line 189 "parser.yacc"
+#line 191 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1598 "src/parser.cpp"
     break;
 
   case 66: /* binop: expr TMUL expr  */
-#line 190 "parser.yacc"
+#line 192 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1604 "src/parser.cpp"
     break;
 
   case 67: /* binop: expr TDIV expr  */
-#line 191 "parser.yacc"
+#line 193 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1610 "src/parser.cpp"
     break;
 
   case 68: /* binop: expr TMOD expr  */
-#line 192 "parser.yacc"
+#line 194 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1616 "src/parser.cpp"
     break;
 
   case 69: /* binop: expr TPOW expr  */
-#line 193 "parser.yacc"
+#line 195 "parser.yacc"
                          { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1622 "src/parser.cpp"
     break;
@@ -1815,4 +1815,4 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 196 "parser.yacc"
+#line 198 "parser.yacc"

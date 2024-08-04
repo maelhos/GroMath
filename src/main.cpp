@@ -2,15 +2,15 @@
 #include "node.h"
 #include "GMcompiler.h"
 
-extern int yydebug;
+// extern int yydebug;
 
 #define YYERROR_VERBOSE 1
-#define YYDEBUG 1
+// #define YYDEBUG 1
 
 
 int main(int argc, char* argv[]){   
 
-    yydebug = 1;
+    // yydebug = 1;
     if (argc < 2)
         exit(0);
 

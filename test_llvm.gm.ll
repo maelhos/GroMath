@@ -8,23 +8,22 @@ declare i32 @printf(ptr, ...)
 
 define i32 @main() {
 entry:
-  %i = alloca i32, align 4
-  store i32 0, ptr %i, align 4
   br label %cond
 
 cond:                                             ; preds = %body, %entry
-  %0 = load i32, ptr %i, align 4
-  %1 = icmp slt i32 %0, 5
-  br i1 %1, label %body, label %loopend
+  %a2 = phi i32 [ 0, %entry ], [ %tmpadd, %body ]
+  %i1 = phi i32 [ 0, %entry ], [ %1, %body ]
+  %0 = icmp slt i32 %i1, 1000000
+  br i1 %0, label %body, label %loopend
 
 body:                                             ; preds = %cond
-  %i1 = load i32, ptr %i, align 4
-  %2 = call i32 (ptr, ...) @printf(ptr @0, i32 %i1)
-  %3 = load i32, ptr %i, align 4
-  %4 = add i32 %3, 1
-  store i32 %4, ptr %i, align 4
+  %tmpmul = mul i32 %a2, 65537
+  %tmprem = srem i32 %tmpmul, 512
+  %tmpadd = add i32 %tmprem, %i1
+  %1 = add i32 %i1, 1
   br label %cond
 
 loopend:                                          ; preds = %cond
+  %2 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @0, i32 %a2)
   ret i32 0
 }

@@ -1473,6 +1473,7 @@ State 78
 
     TMUL  shift, and go to state 57
     TDIV  shift, and go to state 58
+    TMOD  shift, and go to state 59
     TPOW  shift, and go to state 60
 
     $default  reduce using rule 63 (binop)
@@ -1496,6 +1497,7 @@ State 79
 
     TMUL  shift, and go to state 57
     TDIV  shift, and go to state 58
+    TMOD  shift, and go to state 59
     TPOW  shift, and go to state 60
 
     $default  reduce using rule 64 (binop)
@@ -1559,11 +1561,7 @@ State 82
    67      | expr TMOD expr •
    68      | expr • TPOW expr
 
-    TPLUS   shift, and go to state 55
-    TMINUS  shift, and go to state 56
-    TMUL    shift, and go to state 57
-    TDIV    shift, and go to state 58
-    TPOW    shift, and go to state 60
+    TPOW  shift, and go to state 60
 
     $default  reduce using rule 67 (binop)
 
