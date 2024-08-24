@@ -18,7 +18,7 @@
     }],
     "grammars": [{
       "language": "gm",
-      "scopeName": "root_scope_gramm",
+      "scopeName": "source.gm",
       "path": "./syntaxes/gm.tmLanguage.json"
     }]
   }

@@ -1,20 +1,64 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "GroMath",
+	"name": "gromath-support",
 	"patterns": [
 		{
 			"include": "#keywords"
 		},
 		{
 			"include": "#strings"
-		}
+		},
+        {
+            "include": "#comment"
+        },
+        {
+            "include": "#basic-type"
+        }
 	],
 	"repository": {
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.gm",
-				"match": "\\b(if|while|for|ret)\\b"
+				"match": "\\b(fn|if|while|for|ret|range)\\b"
 			}]
+		},
+        "basic-type": {
+			"patterns": [{
+				"name": "keyword.control.gm",
+				"match": "\\b(int|str)\\b"
+			}]
+		},
+        "comment": {
+			"patterns": [
+				{
+					"begin": "/\\*\\*(?!/)",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.json"
+						}
+					},
+					"end": "\\*/",
+					"name": "comment.block.documentation.json"
+				},
+				{
+					"begin": "/\\*",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.json"
+						}
+					},
+					"end": "\\*/",
+					"name": "comment.block.json"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.comment.json"
+						}
+					},
+					"match": "(//).*$\\n?",
+					"name": "comment.line.double-slash.js"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.gm",

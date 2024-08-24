@@ -1,9 +1,10 @@
 
+
 fn main() : int {
-    a: int = 0;
-    for i: int in range(0, 1000000): {
-        a = (65537 * a) % 512 + i;
-    }
-    printf("%d\n", a);
+    
+    for i: int in range(25):
+        printf("le petit test : %d\n", i);
+
     ret 0;
 }
+
