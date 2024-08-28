@@ -11,13 +11,13 @@ entry:
   br label %cond
 
 cond:                                             ; preds = %body, %entry
-  %i1 = phi i32 [ 0, %entry ], [ %2, %body ]
+  %i1 = phi i32 [ 4, %entry ], [ %2, %body ]
   %0 = icmp slt i32 %i1, 25
   br i1 %0, label %body, label %loopend
 
 body:                                             ; preds = %cond
   %1 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @0, i32 %i1)
-  %2 = add i32 %i1, 1
+  %2 = add i32 %i1, -2
   br label %cond
 
 loopend:                                          ; preds = %cond

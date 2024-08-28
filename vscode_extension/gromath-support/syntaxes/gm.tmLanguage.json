@@ -11,19 +11,63 @@
             "include": "#comment"
         },
         {
-            "include": "#basic-type"
+            "include": "#type"
+        },
+        {
+            "include": "#operators"
+        },
+        {
+            "include": "#numeric"
+        },
+        {
+            "include": "#specialfunc"
+        },
+        {
+            "include": "#funcdecl"
         }
+        
 	],
 	"repository": {
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.gm",
-				"match": "\\b(fn|if|while|for|ret|range)\\b"
+				"match": "\\b(if|while|for|ret|in)\\b"
 			}]
 		},
-        "basic-type": {
+        "funcdecl": {
 			"patterns": [{
-				"name": "keyword.control.gm",
+				"match": "(fn)\\s+([\\w$]+)\\s*\\(",
+                "captures" : {
+                    "1" : {
+                        "name": "keyword.control.gm"
+                    },
+                    "2" : {
+                        "name": "entity.name.function.gm"
+                    }
+                }
+			}]
+		},
+        "specialfunc": {
+			"patterns": [{
+				"name": "support.function.gm",
+				"match": "\\b(range|print|printf)\\b"
+			}]
+		},
+        "numeric": {
+			"patterns": [{
+				"name": "constant.numeric.gm",
+				"match": "\\b([0-9]+|0x[0-9a-fA-F]+)\\b"
+			}]
+		},
+        "operators": {
+			"patterns": [{
+				"name": "keyword.operator.arithmetic.gm",
+				"match": "(\\+|\\-|\\*|\\/|\\^)"
+			}]
+		},
+        "type": {
+			"patterns": [{
+				"name": "support.type.gm",
 				"match": "\\b(int|str)\\b"
 			}]
 		},
@@ -33,30 +77,30 @@
 					"begin": "/\\*\\*(?!/)",
 					"captures": {
 						"0": {
-							"name": "punctuation.definition.comment.json"
+							"name": "punctuation.definition.comment.gm"
 						}
 					},
 					"end": "\\*/",
-					"name": "comment.block.documentation.json"
+					"name": "comment.block.documentation.gm"
 				},
 				{
 					"begin": "/\\*",
 					"captures": {
 						"0": {
-							"name": "punctuation.definition.comment.json"
+							"name": "punctuation.definition.comment.gm"
 						}
 					},
 					"end": "\\*/",
-					"name": "comment.block.json"
+					"name": "comment.block.gm"
 				},
 				{
 					"captures": {
 						"1": {
-							"name": "punctuation.definition.comment.json"
+							"name": "punctuation.definition.comment.gm"
 						}
 					},
 					"match": "(//).*$\\n?",
-					"name": "comment.line.double-slash.js"
+					"name": "comment.line.double-slash.gm"
 				}
 			]
 		},
