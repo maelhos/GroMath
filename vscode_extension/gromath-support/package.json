@@ -2,6 +2,7 @@
   "name": "gromath-support",
   "displayName": "GroMath Support",
   "description": "Language support and coloring for GroMath",
+  "icon": "icon.png",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.89.0"
@@ -14,6 +15,10 @@
       "id": "gm",
       "aliases": ["GroMath", "gm"],
       "extensions": [".gm"],
+      "icon": {
+        "light": "icon.png",
+        "dark": "icon.png"
+      },
       "configuration": "./language-configuration.json"
     }],
     "grammars": [{

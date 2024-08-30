@@ -36,13 +36,16 @@
 		},
         "funcdecl": {
 			"patterns": [{
-				"match": "(fn)\\s+([\\w$]+)\\s*\\(",
+				"match": "(fn)\\s+([\\w$]+)\\s*\\(.*\\)\\s*(\\-\\>)",
                 "captures" : {
                     "1" : {
                         "name": "keyword.control.gm"
                     },
                     "2" : {
                         "name": "entity.name.function.gm"
+                    },
+                    "3" : {
+                        "name": "punctuation.gm"
                     }
                 }
 			}]
